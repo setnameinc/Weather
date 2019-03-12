@@ -11,21 +11,23 @@ import com.setname.weather.R
 import com.setname.weather.mvp.adaters.welcome.WelcomeAdapter
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
 import com.setname.weather.mvp.interfaces.welcome.adapter.list.ListWelcome
-import com.setname.weather.mvp.models.adapter.welcome.weather_main.ModelWeatherMain
+import com.setname.weather.mvp.models.adapter.welcome.up_panel.ModelUpPanelForList
+import com.setname.weather.mvp.models.adapter.welcome.weather_weeks.ModelWeatherWeekForList
+import com.setname.weather.mvp.models.responces.additionals.ModelResponseUpPanel
+import com.setname.weather.mvp.models.responces.additionals.ModelResponseWeatherWeek
 import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
 import kotlinx.android.synthetic.main.fragment_welcome.*
-import com.setname.weather.mvp.models.retrofit.ModelResponse
-import java.util.logging.Logger
 
 
 class WelcomeFragment : Fragment(), WelcomeView {
 
     private lateinit var viewWelcome: View
-    private var welcomePresenter: WelcomePresenter = WelcomePresenter(this)
 
+    private var welcomePresenter: WelcomePresenter = WelcomePresenter(this)
     private lateinit var recyclerView: RecyclerView
+
     private lateinit var adapter: WelcomeAdapter
-    private var list: ArrayList<ListWelcome> = arrayListOf()
+    private var listWelcome: ArrayList<ListWelcome> = arrayListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewWelcome = inflater.inflate(R.layout.fragment_welcome, container, false)
@@ -41,10 +43,10 @@ class WelcomeFragment : Fragment(), WelcomeView {
 
     }
 
-    fun initRecyclerView() {
+    private fun initRecyclerView() {
 
         recyclerView = fragment_welcome_rv
-        adapter = WelcomeAdapter(list)
+        adapter = WelcomeAdapter(listWelcome)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
@@ -52,14 +54,11 @@ class WelcomeFragment : Fragment(), WelcomeView {
 
     }
 
-    override fun showRecyclerViewForecast(modelResponse: ModelResponse?, modelWeatherMain:ModelWeatherMain?) {
-        list.add(modelWeatherMain!!)
-//        list.addAll(modelResponse!!.list)
-        adapter.notifyDataSetChanged()
-//        Logger.getLogger("Welcome").info(modelResponse!!.list[0].weather.joinToString())
+    override fun setUpPanelForecast(modelWeatherUpPanel: ModelUpPanelForList?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showCurrentDayForecast() {
+    override fun setWeatherWeeks(modelResponseWeatherWeek: ModelWeatherWeekForList?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

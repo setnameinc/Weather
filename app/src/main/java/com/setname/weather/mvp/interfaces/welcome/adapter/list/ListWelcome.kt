@@ -4,8 +4,9 @@ abstract class ListWelcome {
 
      enum class ListWelcomeType(val type: Int) {
 
-        WEATHER_LIST(1),
-         WEATHER_UP_PANEL(2)
+         WEATHER_UP_PANEL(1),
+         WEATHER_WEEK(2),
+
 
     }
 

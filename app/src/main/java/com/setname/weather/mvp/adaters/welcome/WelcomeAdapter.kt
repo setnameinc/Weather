@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.setname.weather.R
 import com.setname.weather.mvp.interfaces.welcome.adapter.list.ListWelcome
-import com.setname.weather.mvp.models.adapter.welcome.weather_main.ModelWeatherMain
-import kotlinx.android.synthetic.main.adapter_weather_main.view.*
+import com.setname.weather.mvp.models.responces.additionals.ModelResponseUpPanel
+import kotlinx.android.synthetic.main.adapter_weather_up_panel.view.*
 
 class WelcomeAdapter(private val items: ArrayList<ListWelcome>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -16,11 +16,16 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>) : RecyclerView.A
         return when(position){
 
             ListWelcome.ListWelcomeType.WEATHER_UP_PANEL.type -> {
-                viewViewHolder = LayoutInflater.from(parent.context).inflate(R.layout.adapter_weather_main, parent, false);
+                viewViewHolder = LayoutInflater.from(parent.context).inflate(R.layout.adapter_weather_up_panel, parent, false);
                 ViewHolderWeatherUpPanel(viewViewHolder)
             }
 
+            ListWelcome.ListWelcomeType.WEATHER_WEEK.type -> {
 
+                viewViewHolder = LayoutInflater.from(parent.context).inflate(R.layout.adapter_weather_week, parent, false);
+                ViewHolderWeatherWeek(viewViewHolder)
+
+            }
 
             else -> null!!//never happened
 
@@ -31,23 +36,23 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>) : RecyclerView.A
 
         override fun bindType(listWelcome:ListWelcome) {
 
-            setWeatherUpPanel(listWelcome as ModelWeatherMain)
+            setWeatherUpPanel(listWelcome as ModelResponseUpPanel)
 
         }
 
-        private fun setWeatherUpPanel(modelWeatherMain: ModelWeatherMain){
+        private fun setWeatherUpPanel(modelWeatherUpPanel: ModelResponseUpPanel){
 
             mView.apply {
-                adapter_image_main_city_name.text = modelWeatherMain.cityName
-                adapter_image_main_city_desc.text = modelWeatherMain.descriptor
-                adapter_image_main_current_temp.text = modelWeatherMain.currentTemp
+                adapter_image_main_city_name.text = modelWeatherUpPanel.cityName
+                adapter_image_main_city_desc.text = modelWeatherUpPanel.descriptor
+                adapter_image_main_current_temp.text = modelWeatherUpPanel.currentTemp
             }
 
         }
 
     }
 
-    class ViewHolderWeatherDownPanel(private var mView: View) : ViewHolder(mView) {
+    class ViewHolderWeatherWeek(private var mView: View) : ViewHolder(mView) {
 
         override fun bindType(listWelcome:ListWelcome) {
 

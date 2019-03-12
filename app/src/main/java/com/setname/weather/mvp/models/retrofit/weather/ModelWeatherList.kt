@@ -9,8 +9,4 @@ data class ModelWeatherList (val dt:Long,
                              val weather: List<ModelWeatherAdditional>,
                              val clouds: ModelClouds,
                              val wind: ModelWind,
-                             val dt_txt:String): ListWelcome() {
-
-    override fun getListItemType(): Int = ListWelcomeType.WEATHER_LIST.type
-
-}
+                             val dt_txt:String)
