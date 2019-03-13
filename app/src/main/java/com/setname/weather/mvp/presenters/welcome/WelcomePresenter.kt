@@ -62,11 +62,13 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     fun check(){
 
-        interactionsWithDatabase.insertData(ModelWeatherForDB("18918_25940323",
+        /*interactionsWithDatabase.insertData(ModelWeatherForDB("18918_25940323",
             ModelWeatherForDBForDay(ModelWeatherDescAndIcon(1, "", "", ""), 2f, 3f, 4f),
             ModelWeatherForDBForDayAdditionalInfo(ModelWeatherForDBForDayAdditionalInfoMainInf(1f,1f,1f,1,1f),
                 ModelClouds(1), ModelWind(1f,1f)
-            )))
+            )))*/
+
+        interactionsWithDatabase.getAllData("18918_25940323")
 
     }
 

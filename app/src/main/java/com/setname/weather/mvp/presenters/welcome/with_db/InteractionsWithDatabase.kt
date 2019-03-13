@@ -21,4 +21,8 @@ class InteractionsWithDatabase(context: Context){
 
     }
 
+    //add voids for :
+    // 1) getting main or additional inf
+    // 2) remove oldest time
+
 }
