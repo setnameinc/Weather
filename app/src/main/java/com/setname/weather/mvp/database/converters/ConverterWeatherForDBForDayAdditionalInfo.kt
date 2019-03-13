@@ -3,17 +3,17 @@ package com.setname.weather.mvp.database.converters
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.setname.weather.mvp.models.database.day.part.ModelWeatherForDBForDay
+import com.setname.weather.mvp.models.database.day.additional.ModelWeatherForDBForDayAdditionalInfo
 
-class ConverterWeatherModelForDB{
+class ConverterWeatherForDBForDayAdditionalInfo {
 
     companion object {
 
         @TypeConverter
         @JvmStatic
-        fun fromString(value: String): ModelWeatherForDBForDay {
+        fun fromString(value: String): ModelWeatherForDBForDayAdditionalInfo {
 
-            val list = object : TypeToken <ModelWeatherForDBForDay>(){}.type
+            val list = object : TypeToken<ModelWeatherForDBForDayAdditionalInfo>() {}.type
 
             return Gson().fromJson(value, list)
 
@@ -21,7 +21,7 @@ class ConverterWeatherModelForDB{
 
         @TypeConverter
         @JvmStatic
-        fun fromArrayList(list: ModelWeatherForDBForDay): String {
+        fun fromArrayList(list: ModelWeatherForDBForDayAdditionalInfo): String {
             val gson = Gson()
             return gson.toJson(list)
         }

@@ -2,18 +2,17 @@ package com.setname.weather.mvp.presenters.welcome
 
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
 import com.setname.weather.mvp.models.database.ModelWeatherForDB
-import com.setname.weather.mvp.models.database.ModelWeatherForDBForDay
-import com.setname.weather.mvp.models.responces.additionals.ModelResponseUpPanel
+import com.setname.weather.mvp.models.database.day.additional.ModelWeatherForDBForDayAdditionalInfo
+import com.setname.weather.mvp.models.database.day.additional.additional.ModelWeatherForDBForDayAdditionalInfoMainInf
+import com.setname.weather.mvp.models.database.day.part.ModelWeatherForDBForDay
 import com.setname.weather.mvp.models.responces.main.ModelResponseWeatherFromDB
-import com.setname.weather.mvp.models.responces.additionals.ModelResponseWeatherWeek
 import com.setname.weather.mvp.models.retrofit.ModelResponse
-import com.setname.weather.mvp.models.retrofit.weather.ModelWeatherMainInf
+import com.setname.weather.mvp.models.retrofit.weather.ModelWeatherDescAndIcon
 import com.setname.weather.mvp.models.retrofit.weather.clouds.ModelClouds
 import com.setname.weather.mvp.models.retrofit.weather.wind.ModelWind
 import com.setname.weather.mvp.presenters.welcome.with_db.InteractionsWithDatabase
 import com.setname.weather.mvp.retrofit.WeatherAPIService
 import com.setname.weather.mvp.utils.poor.AppContext
-import com.setname.weather.mvp.views.welcome.WelcomeFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,15 +62,11 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     fun check(){
 
-        log.info(interactionsWithDatabase.getAllData("18918_2131231231")!![0].toString())
-        /*interactionsWithDatabase.insertData(ModelWeatherForDB("18918_2131231231",
-            ModelWeatherForDBForDay(
-                ModelWeatherMainInf(1.3f,1.3f,1.3f,1.3f,1.3f,1.3f,1, 1.3f),
-                listOf(),
-                ModelClouds(2),
-                ModelWind(1.3f, 1.3f),
-                "123 12 31 2 43 4534 5 34"
-                )))*/
+        interactionsWithDatabase.insertData(ModelWeatherForDB("18918_25940323",
+            ModelWeatherForDBForDay(ModelWeatherDescAndIcon(1, "", "", ""), 2f, 3f, 4f),
+            ModelWeatherForDBForDayAdditionalInfo(ModelWeatherForDBForDayAdditionalInfoMainInf(1f,1f,1f,1,1f),
+                ModelClouds(1), ModelWind(1f,1f)
+            )))
 
     }
 
