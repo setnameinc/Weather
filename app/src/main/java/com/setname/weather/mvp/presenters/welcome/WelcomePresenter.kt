@@ -1,17 +1,10 @@
 package com.setname.weather.mvp.presenters.welcome
 
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
-import com.setname.weather.mvp.models.database.ModelWeatherForDB
-import com.setname.weather.mvp.models.database.day.additional.ModelWeatherForDBForDayAdditionalInfo
-import com.setname.weather.mvp.models.database.day.additional.additional.ModelWeatherForDBForDayAdditionalInfoMainInf
-import com.setname.weather.mvp.models.database.day.part.ModelWeatherForDBForDay
-import com.setname.weather.mvp.models.responces.main.ModelResponseWeatherFromDB
 import com.setname.weather.mvp.models.retrofit.ModelResponse
-import com.setname.weather.mvp.models.retrofit.weather.ModelWeatherDescAndIcon
-import com.setname.weather.mvp.models.retrofit.weather.clouds.ModelClouds
-import com.setname.weather.mvp.models.retrofit.weather.wind.ModelWind
 import com.setname.weather.mvp.presenters.welcome.with_db.InteractionsWithDatabase
 import com.setname.weather.mvp.retrofit.WeatherAPIService
+import com.setname.weather.mvp.utils.converters.ConverterResponseToDBType
 import com.setname.weather.mvp.utils.poor.AppContext
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,6 +12,8 @@ import retrofit2.Response
 import java.util.logging.Logger
 
 class WelcomePresenter(private var welcomeView: WelcomeView) {
+
+    private val THREE_HOURS_IN_MS = 10800000L
 
     private val weatherAPIService by lazy {
         WeatherAPIService.retrofit
@@ -34,6 +29,10 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     fun setForecast(cityID: Long) {
 
+        deleteUselessData()
+
+        //load current data, if it offline, load minInDB
+
         fun getForecastFromServer(cityId: Long) = weatherAPIService.getForecastByCityId(cityId)
 
         getForecastFromServer(cityID).enqueue(object : Callback<ModelResponse> {
@@ -41,13 +40,7 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
             override fun onResponse(call: Call<ModelResponse>?, response: Response<ModelResponse>?) {
 
                 val response = response!!.body()!!
-
-                //TODO(make good architecture)
-
-//                val modelResponseWeatherFromServerOWMToDB =
-//                call save "modelResponseWeatherFromServerOWMToDB" to DB
-//                setWeatherForecastForWelcomeFragment(modelResponseWeatherFromDBToWelcomeFragmentListWelcome)
-
+                
                 return
 
             }
@@ -56,30 +49,26 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
         })
 
-        check()
+    }
+
+    private fun deleteUselessData(){
+
+        interactionsWithDatabase.deleteUseless(System.currentTimeMillis() - THREE_HOURS_IN_MS)
+        //load last forecast from server
 
     }
 
-    fun check(){
+    private fun saveDataToDB(modelResponse: ModelResponse) {
 
-        /*interactionsWithDatabase.insertData(ModelWeatherForDB("18918_25940323",
-            ModelWeatherForDBForDay(ModelWeatherDescAndIcon(1, "", "", ""), 2f, 3f, 4f),
-            ModelWeatherForDBForDayAdditionalInfo(ModelWeatherForDBForDayAdditionalInfoMainInf(1f,1f,1f,1,1f),
-                ModelClouds(1), ModelWind(1f,1f)
-            )))*/
-
-        interactionsWithDatabase.getAllData("18918_25940323")
+        interactionsWithDatabase.insertListData(ConverterResponseToDBType.convertResponseToDBType(modelResponse))
 
     }
 
-    fun saveDataToDB(modelResponseWeatherFromDB: ModelResponseWeatherFromDB) {
+    private fun setCurrentWeather(){}
+
+    private fun setWeatherForecastForWelcomeFragment() {
 
 
-    }
-
-    fun setWeatherForecastForWelcomeFragment() {
-
-        //from DB to list in view
 
     }
 

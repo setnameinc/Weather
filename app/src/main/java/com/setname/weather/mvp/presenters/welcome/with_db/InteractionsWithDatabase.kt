@@ -9,15 +9,25 @@ class InteractionsWithDatabase(context: Context){
 
     private var weatherDAO: WeatherDAO? = WeatherDatabase.getInstance(context).weatherDAO()
 
-    fun getAllData(id:String):List<ModelWeatherForDB>?{
+    fun getAll():List<ModelWeatherForDB>? = weatherDAO?.getAll()
 
-        return weatherDAO?.getAll(id)
-
-    }
+    fun getByCityCode(city_id:Long):List<ModelWeatherForDB>? = weatherDAO?.getByCityCode(city_id)
 
     fun insertData(modelWeatherForDB: ModelWeatherForDB){
 
-        weatherDAO?.insert(modelWeatherForDB)
+        weatherDAO?.insertData(modelWeatherForDB)
+
+    }
+
+    fun insertListData(list: List<ModelWeatherForDB>){
+
+        weatherDAO?.insertListData(list)
+
+    }
+
+    fun deleteUseless(time:Long){
+
+        weatherDAO?.deleteUseless(time)
 
     }
 

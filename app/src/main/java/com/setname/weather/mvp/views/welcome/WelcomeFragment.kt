@@ -13,8 +13,6 @@ import com.setname.weather.mvp.interfaces.welcome.WelcomeView
 import com.setname.weather.mvp.interfaces.welcome.adapter.list.ListWelcome
 import com.setname.weather.mvp.models.adapter.welcome.up_panel.ModelUpPanelForList
 import com.setname.weather.mvp.models.adapter.welcome.weather_weeks.ModelWeatherWeekForList
-import com.setname.weather.mvp.models.responces.additionals.ModelResponseUpPanel
-import com.setname.weather.mvp.models.responces.additionals.ModelResponseWeatherWeek
 import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
 import kotlinx.android.synthetic.main.fragment_welcome.*
 

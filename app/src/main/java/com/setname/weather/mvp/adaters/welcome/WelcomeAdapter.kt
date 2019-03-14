@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.setname.weather.R
 import com.setname.weather.mvp.interfaces.welcome.adapter.list.ListWelcome
-import com.setname.weather.mvp.models.responces.additionals.ModelResponseUpPanel
+import com.setname.weather.mvp.models.adapter.welcome.up_panel.ModelUpPanelForList
 import kotlinx.android.synthetic.main.adapter_weather_up_panel.view.*
 
 class WelcomeAdapter(private val items: ArrayList<ListWelcome>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -36,11 +36,11 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>) : RecyclerView.A
 
         override fun bindType(listWelcome:ListWelcome) {
 
-            setWeatherUpPanel(listWelcome as ModelResponseUpPanel)
+            setWeatherUpPanel(listWelcome as ModelUpPanelForList)
 
         }
 
-        private fun setWeatherUpPanel(modelWeatherUpPanel: ModelResponseUpPanel){
+        private fun setWeatherUpPanel(modelWeatherUpPanel: ModelUpPanelForList){
 
             mView.apply {
                 adapter_image_main_city_name.text = modelWeatherUpPanel.cityName

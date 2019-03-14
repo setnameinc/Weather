@@ -1,4 +1,4 @@
-package com.setname.weather.mvp.models.database.day.part
+package com.setname.weather.mvp.models.database.day.main
 
 import com.setname.weather.mvp.models.retrofit.weather.ModelWeatherDescAndIcon
 
