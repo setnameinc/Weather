@@ -5,19 +5,20 @@
     android:layout_height="120dp">
 
     <TextView
+        android:id="@+id/adapter_weather_week_for_hours_model_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_thin"
         android:text="Now"
         android:textSize="16sp"
         android:textColor="#212121"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/adapter_weather_week_for_hours_model_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/adapter_weather_week_for_hours_model_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="#4A0F2c"
@@ -27,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/adapter_weather_week_for_hours_model_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_thin"
@@ -36,6 +38,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/adapter_weather_week_for_hours_model_image" />
 
 </android.support.constraint.ConstraintLayout>

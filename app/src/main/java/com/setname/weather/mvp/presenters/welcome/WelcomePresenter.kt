@@ -1,6 +1,8 @@
 package com.setname.weather.mvp.presenters.welcome
 
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
+import com.setname.weather.mvp.models.adapter.welcome.weather_weeks.ModelWeatherWeekForList
+import com.setname.weather.mvp.models.database.ModelWeatherForDB
 import com.setname.weather.mvp.models.retrofit.ModelResponse
 import com.setname.weather.mvp.presenters.welcome.with_db.InteractionsWithDatabase
 import com.setname.weather.mvp.retrofit.WeatherAPIService
@@ -40,7 +42,10 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
             override fun onResponse(call: Call<ModelResponse>?, response: Response<ModelResponse>?) {
 
                 val response = response!!.body()!!
-                
+
+
+
+
                 return
 
             }
@@ -49,9 +54,11 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
         })
 
+        setWeather(cityID)
+
     }
 
-    private fun deleteUselessData(){
+    private fun deleteUselessData() {
 
         interactionsWithDatabase.deleteUseless(System.currentTimeMillis() - THREE_HOURS_IN_MS)
         //load last forecast from server
@@ -64,13 +71,16 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     }
 
-    private fun setCurrentWeather(){}
+    private fun getAll() = interactionsWithDatabase.getAll()
 
-    private fun setWeatherForecastForWelcomeFragment() {
+    private fun setWeather(cityID: Long) {
 
-
+        welcomeView.setWeather(listOf(interactionsWithDatabase.getUpPanelByCityId(cityID)!!, convertToPerThreeHours(getAll()!!)))
 
     }
+
+    private fun convertToPerThreeHours(modelWeatherForDB: List<ModelWeatherForDB>): ModelWeatherWeekForList =
+        ModelWeatherWeekForList(modelWeatherForDB)
 
 
 }

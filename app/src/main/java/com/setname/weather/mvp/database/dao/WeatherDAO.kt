@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import com.setname.weather.mvp.models.database.ModelWeatherForDB
+import com.setname.weather.mvp.models.database.smart_request.ModelUpPanelFromDB
 
 @Dao
 interface WeatherDAO{
@@ -17,16 +18,16 @@ interface WeatherDAO{
     @Insert
     fun insertData(modelDatabase: ModelWeatherForDB)
 
-    @Query("DELETE FROM weather WHERE id_time > :time")
+    @Query("DELETE FROM weather WHERE id_dt > :time")
     fun deleteUseless(time: Long)
 
     @Query("SELECT * FROM weather WHERE id_city = :city_code LIMIT 8")
     fun getByCityCodeWithLimit8(city_code: Long): List<ModelWeatherForDB>
 
     @Insert
-    fun insertListData(list: List<ModelWeatherForDB>)//
+    fun insertListData(list: List<ModelWeatherForDB>)
 
-    @Query("SELECT MIN(id_time) FROM weather WHERE id_city = :city_code")
-    fun getCurrentWeather(city_code: Long): Long
+    @Query("SELECT id_dt, id_city, `temp`, model_up_panel FROM weather WHERE id_city = :city_code")
+    fun getUpPanelByCityId(city_code: Long): ModelUpPanelFromDB
 
 }

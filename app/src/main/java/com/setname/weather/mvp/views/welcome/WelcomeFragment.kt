@@ -7,11 +7,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListView
 import com.setname.weather.R
-import com.setname.weather.mvp.adaters.welcome.WelcomeAdapter
+import com.setname.weather.mvp.adapters.welcome.WelcomeAdapter
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
-import com.setname.weather.mvp.interfaces.welcome.adapter.list.ListWelcome
-import com.setname.weather.mvp.models.adapter.welcome.up_panel.ModelUpPanelForList
+import com.setname.weather.mvp.interfaces.welcome.adapter.list_main.ListWelcome
 import com.setname.weather.mvp.models.adapter.welcome.weather_weeks.ModelWeatherWeekForList
 import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
 import kotlinx.android.synthetic.main.fragment_welcome.*
@@ -52,12 +52,8 @@ class WelcomeFragment : Fragment(), WelcomeView {
 
     }
 
-    override fun setUpPanelForecast(modelWeatherUpPanel: ModelUpPanelForList?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setWeatherWeeks(modelResponseWeatherWeek: ModelWeatherWeekForList?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setWeather(listView: List<ListWelcome>) {
+        listWelcome.addAll(listView)
     }
 
     override fun showLoading() {

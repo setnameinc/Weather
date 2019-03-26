@@ -1,12 +1,11 @@
 package com.setname.weather.mvp.interfaces.welcome
 
+import android.widget.ListView
 import com.setname.weather.mvp.interfaces.LoadingView
-import com.setname.weather.mvp.models.adapter.welcome.up_panel.ModelUpPanelForList
-import com.setname.weather.mvp.models.adapter.welcome.weather_weeks.ModelWeatherWeekForList
+import com.setname.weather.mvp.interfaces.welcome.adapter.list_main.ListWelcome
 
 interface WelcomeView: LoadingView {
 
-    fun setUpPanelForecast(modelWeatherUpPanel: ModelUpPanelForList?)
-    fun setWeatherWeeks(modelResponseWeatherWeek: ModelWeatherWeekForList?)
+    fun setWeather(listView: List<ListWelcome>)
 
 }

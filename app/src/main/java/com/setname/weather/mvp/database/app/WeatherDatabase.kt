@@ -6,12 +6,12 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import com.setname.weather.mvp.database.converters.ConverterWeatherForDBForDayAdditionalInfo
-import com.setname.weather.mvp.database.converters.ConverterWeatherModelForDB
+import com.setname.weather.mvp.database.converters.ConverterModelUpPanelForDB
 import com.setname.weather.mvp.database.dao.WeatherDAO
 import com.setname.weather.mvp.models.database.ModelWeatherForDB
 
 @Database(entities = arrayOf(ModelWeatherForDB::class), version = 1, exportSchema = false)
-@TypeConverters(ConverterWeatherModelForDB::class, ConverterWeatherForDBForDayAdditionalInfo::class)
+@TypeConverters(ConverterModelUpPanelForDB::class, ConverterWeatherForDBForDayAdditionalInfo::class)
 
 abstract class WeatherDatabase: RoomDatabase(){
 

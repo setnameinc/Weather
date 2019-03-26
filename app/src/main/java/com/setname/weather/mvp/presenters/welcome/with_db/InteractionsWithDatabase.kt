@@ -5,34 +5,32 @@ import com.setname.weather.mvp.database.app.WeatherDatabase
 import com.setname.weather.mvp.database.dao.WeatherDAO
 import com.setname.weather.mvp.models.database.ModelWeatherForDB
 
-class InteractionsWithDatabase(context: Context){
+class InteractionsWithDatabase(context: Context) {
 
     private var weatherDAO: WeatherDAO? = WeatherDatabase.getInstance(context).weatherDAO()
 
-    fun getAll():List<ModelWeatherForDB>? = weatherDAO?.getAll()
+    fun getAll(): List<ModelWeatherForDB>? = weatherDAO?.getAll()
 
-    fun getByCityCode(city_id:Long):List<ModelWeatherForDB>? = weatherDAO?.getByCityCode(city_id)
+    fun getByCityCode(city_id: Long): List<ModelWeatherForDB>? = weatherDAO?.getByCityCode(city_id)
 
-    fun insertData(modelWeatherForDB: ModelWeatherForDB){
+    fun insertData(modelWeatherForDB: ModelWeatherForDB) {
 
         weatherDAO?.insertData(modelWeatherForDB)
 
     }
 
-    fun insertListData(list: List<ModelWeatherForDB>){
+    fun insertListData(list: List<ModelWeatherForDB>) {
 
         weatherDAO?.insertListData(list)
 
     }
 
-    fun deleteUseless(time:Long){
+    fun deleteUseless(time: Long) {
 
         weatherDAO?.deleteUseless(time)
 
     }
 
-    //add voids for :
-    // 1) getting main or additional inf
-    // 2) remove oldest time
+    fun getUpPanelByCityId(city_id: Long) = weatherDAO?.getUpPanelByCityId(city_id)
 
 }
