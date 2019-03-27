@@ -79,19 +79,35 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
     private fun setWeather(cityID: Long) {
 
         welcomeView.setWeather(
-            listOf(interactionsWithDatabase.getUpPanelByCityId(cityID)!!,
+            listOf(
+                interactionsWithDatabase.getUpPanelByCityId(cityID)!!,
                 ModelThreeHoursList(
                     listOf(
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f)
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelThreeHours(2L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelThreeHours(3L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelThreeHours(4L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelThreeHours(5L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelThreeHours(6L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelThreeHours(7L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelThreeHours(8L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelThreeHours(9L, "http://openweathermap.org/img/w/01n.png", 2f, 18918)
                     )
+                ), ModelDayList(
+
+                    listOf(
+
+                        ModelDay(10L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelDay(11L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelDay(12L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelDay(13L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelDay(14L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelDay(15L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelDay(16L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
+                        ModelDay(17L, "http://openweathermap.org/img/w/01n.png", 2f, 18918)
+
+                    )
+
                 )
             )
         )

@@ -4,20 +4,39 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.setname.weather.R
 import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
+import com.setname.weather.mvp.utils.adapters.AdapterClickListener
+import com.setname.weather.mvp.utils.expand.listen
+import kotlinx.android.synthetic.main.adapter_weather_per_day_model.view.*
+import java.util.logging.Logger
 
-class DayAdapter(private val list: List<ModelDay>):
+class DayAdapter(private val list: List<ModelDay>, private val clickListener: AdapterClickListener) :
     RecyclerView.Adapter<DayAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
-        return (ViewHolder(
+        return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.adapter_weather_per_day_model,
                 parent,
                 false
             )
-        ))
+        ).listen { pos, type ->
+            run {
+                clickListener.setThreeHoursPanel(
+                    id_city = list[pos].id_city,
+                    id_dt = list[pos].id_dt
+                )
+                clickListener.setUpPanel(
+                    id_dt = list[pos].id_dt,
+                    id_city =  list[pos].id_city
+                )
+                Logger.getLogger("DEG: DayAdapter").info("${list[pos].id_dt}")
+            }
+        }
     }
 
     override fun getItemCount(): Int = list.size
@@ -32,8 +51,29 @@ class DayAdapter(private val list: List<ModelDay>):
 
             view.apply {
 
+                adapter_weather_per_day_model_time.setTime(modelHourForModelDay.id_dt)
+                adapter_weather_per_day_model_image.setImage(modelHourForModelDay.icon)
+                adapter_weather_per_day_model_temp.setTemp(modelHourForModelDay.temp)
 
             }
+
+        }
+
+        private fun ImageView.setImage(image_url: String) {
+
+            Glide.with(itemView.context).load(image_url).into(this)
+
+        }
+
+        private fun TextView.setTemp(temp: Float) {
+
+            this.text = temp.toString()
+
+        }
+
+        private fun TextView.setTime(dt: Long) {
+
+            this.text = dt.toString()
 
         }
 
