@@ -7,13 +7,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import com.setname.weather.R
 import com.setname.weather.mvp.adapters.welcome.WelcomeAdapter
+import com.setname.weather.mvp.adapters.welcome.hour.ThreeHoursAdapter
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
 import com.setname.weather.mvp.interfaces.welcome.adapter.list_main.ListWelcome
-import com.setname.weather.mvp.models.adapter.welcome.weather_weeks.ModelWeatherWeekForList
+import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
+import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
 import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
+import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.fragment_welcome.*
 
 

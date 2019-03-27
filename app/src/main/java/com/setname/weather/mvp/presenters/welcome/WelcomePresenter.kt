@@ -1,7 +1,10 @@
 package com.setname.weather.mvp.presenters.welcome
 
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
-import com.setname.weather.mvp.models.adapter.welcome.weather_weeks.ModelWeatherWeekForList
+import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
+import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
+import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
+import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
 import com.setname.weather.mvp.models.database.ModelWeatherForDB
 import com.setname.weather.mvp.models.retrofit.ModelResponse
 import com.setname.weather.mvp.presenters.welcome.with_db.InteractionsWithDatabase
@@ -75,12 +78,24 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     private fun setWeather(cityID: Long) {
 
-        welcomeView.setWeather(listOf(interactionsWithDatabase.getUpPanelByCityId(cityID)!!, convertToPerThreeHours(getAll()!!)))
+        welcomeView.setWeather(
+            listOf(interactionsWithDatabase.getUpPanelByCityId(cityID)!!,
+                ModelThreeHoursList(
+                    listOf(
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f),
+                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f)
+                    )
+                )
+            )
+        )
 
     }
-
-    private fun convertToPerThreeHours(modelWeatherForDB: List<ModelWeatherForDB>): ModelWeatherWeekForList =
-        ModelWeatherWeekForList(modelWeatherForDB)
-
 
 }
