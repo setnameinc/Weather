@@ -32,7 +32,7 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     fun setForecast(cityID: Long) {
 
-        deleteUselessData()
+        /*deleteUselessData()*/
 
         fun getForecastFromServer(cityId: Long) = weatherAPIService.getForecastByCityId(cityId)
 
@@ -42,7 +42,9 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
                 val response = response!!.body()!!
 
-                //insert to DB
+/*
+                interactionsWithDatabase.insertListData(ConverterResponseToDBType.convertResponseToDBType(response))
+*/
 
                 return
 
@@ -63,7 +65,10 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     private fun deleteUselessData() {
 
-        interactionsWithDatabase.deleteUseless(System.currentTimeMillis() - THREE_HOURS_IN_MS)
+        interactionsWithDatabase.deleteUseless((System.currentTimeMillis() - THREE_HOURS_IN_MS)/1000)
+
+        Logger.getLogger("WelcomePresenter").info("dif = ${System.currentTimeMillis() + THREE_HOURS_IN_MS}")
+
         //load last forecast from server
 
     }

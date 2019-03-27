@@ -14,7 +14,10 @@ interface WeatherDAO{
     @Insert
     fun insertData(modelDatabase: ModelWeatherForDB)
 
-    @Query("DELETE FROM weather WHERE id_dt > :time")
+    @Query("DELETE FROM weather")
+    fun testDeleteAll()
+
+    @Query("DELETE FROM weather WHERE id_dt < :time")
     fun deleteUseless(time: Long)
 
     @Insert

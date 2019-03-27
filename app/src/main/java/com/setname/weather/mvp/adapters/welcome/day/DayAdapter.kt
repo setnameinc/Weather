@@ -1,6 +1,7 @@
 package com.setname.weather.mvp.adapters.welcome.day
 
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,7 +73,7 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         private fun TextView.setTime(dt: Long) {
 
-            this.text = dt.toString()
+            this.text = DateFormat.format("EEEE", dt*1000).toString()
 
         }
 

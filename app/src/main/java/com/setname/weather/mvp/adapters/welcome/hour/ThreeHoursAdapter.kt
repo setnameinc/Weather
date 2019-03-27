@@ -1,6 +1,7 @@
 package com.setname.weather.mvp.adapters.welcome.hour
 
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.expand.listen
 import kotlinx.android.synthetic.main.adapter_weather_per_three_hours_model.view.*
+import java.util.logging.Logger
 
 class ThreeHoursAdapter(private val list: ArrayList<ModelThreeHours>, private val clickListener: AdapterClickListener) :
     RecyclerView.Adapter<ThreeHoursAdapter.ViewHolder>() {
@@ -67,7 +69,22 @@ class ThreeHoursAdapter(private val list: ArrayList<ModelThreeHours>, private va
 
         private fun TextView.setTime(dt: Long) {
 
-            this.text = dt.toString()
+            //problem with UTC
+            //check for London, Moscow
+            //Are UTC equally ?
+
+            val dt1 = dt-10800
+
+            if (System.currentTimeMillis()/1000 > dt1){
+
+                this.text = "Now"
+
+            } else {
+
+                this.text = DateFormat.format("dd HH a", dt1 * 1000L)
+
+            }
+
 
         }
 
