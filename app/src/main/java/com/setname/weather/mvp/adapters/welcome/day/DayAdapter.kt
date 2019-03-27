@@ -31,10 +31,9 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
                     id_dt = list[pos].id_dt
                 )
                 clickListener.setUpPanel(
-                    id_dt = list[pos].id_dt,
-                    id_city =  list[pos].id_city
+                    id_city = list[pos].id_city,
+                    id_dt = list[pos].id_dt
                 )
-                Logger.getLogger("DEG: DayAdapter").info("${list[pos].id_dt}")
             }
         }
     }
@@ -52,7 +51,7 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
             view.apply {
 
                 adapter_weather_per_day_model_time.setTime(modelHourForModelDay.id_dt)
-                adapter_weather_per_day_model_image.setImage(modelHourForModelDay.icon)
+                adapter_weather_per_day_model_image.setImage(modelHourForModelDay.image_url)
                 adapter_weather_per_day_model_temp.setTemp(modelHourForModelDay.temp)
 
             }
@@ -61,7 +60,7 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         private fun ImageView.setImage(image_url: String) {
 
-            Glide.with(itemView.context).load(image_url).into(this)
+            Glide.with(itemView.context).load("http://openweathermap.org/img/w/$image_url.png").into(this)
 
         }
 

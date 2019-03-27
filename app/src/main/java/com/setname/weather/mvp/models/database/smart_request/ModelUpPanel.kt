@@ -6,7 +6,7 @@ import com.setname.weather.mvp.interfaces.welcome.adapter.list_main.ListWelcome
 import com.setname.weather.mvp.models.database.model_up_panel.ModelUpPanelForDB
 import org.json.JSONObject
 
-data class ModelUpPanelFromDB(
+data class ModelUpPanel(
 
     @ColumnInfo(name = "id_city")
     val id_city:Long,
@@ -18,6 +18,7 @@ data class ModelUpPanelFromDB(
     val model_up_panel: ModelUpPanelForDB
 
 ): ListWelcome(){
+
     override fun getListItemType(): Int = ListWelcome.ListWelcomeType.WEATHER_UP_PANEL.type
 
 }

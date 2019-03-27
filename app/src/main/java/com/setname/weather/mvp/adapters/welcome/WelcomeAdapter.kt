@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.setname.weather.R
 import com.setname.weather.mvp.adapters.welcome.day.DayAdapter
 import com.setname.weather.mvp.adapters.welcome.hour.ThreeHoursAdapter
@@ -14,36 +13,40 @@ import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
 import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
 import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
-import com.setname.weather.mvp.models.database.model_up_panel.ModelUpPanelForDB
-import com.setname.weather.mvp.models.database.smart_request.ModelUpPanelFromDB
+import com.setname.weather.mvp.models.database.smart_request.ModelUpPanel
+import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_up_panel.view.*
 import java.util.logging.Logger
 
-class WelcomeAdapter(private val items: ArrayList<ListWelcome>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welcomePresenter: WelcomePresenter) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     AdapterClickListener {
 
     private lateinit var viewHolderUpPanel: ViewHolderWeatherUpPanel
     private lateinit var viewHolderWeatherPerThreeHours: ViewHolderWeatherPerThreeHours
 
     override fun setThreeHoursPanel(id_city: Long, id_dt: Long) {
+
         viewHolderWeatherPerThreeHours.addToList(
             ModelThreeHoursList(
-                listOf(
-                    ModelThreeHours(id_dt, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                    ModelThreeHours(id_dt, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                    ModelThreeHours(id_dt, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                    ModelThreeHours(id_dt, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                    ModelThreeHours(id_dt, "http://openweathermap.org/img/w/01n.png", 2f, 18918)
-                )
+                welcomePresenter.getThreeHours(id_dt = id_dt, id_city = id_city)
             )
         )
-        Logger.getLogger("DEG: perThreeHours").info("Changed")
+
+        Logger.getLogger("Welcome").info("${welcomePresenter.getThreeHours(id_dt = id_dt, id_city = id_city)}")
+
     }
 
     override fun setUpPanel(id_city: Long, id_dt: Long) {
-        viewHolderUpPanel.setWeatherUpPanel(ModelUpPanelFromDB(id_dt, 2L, 3f, ModelUpPanelForDB("", "")))
+
+        viewHolderUpPanel.setWeatherUpPanel(
+
+            welcomePresenter.getUpPanel(id_city = id_city, id_dt = id_dt)
+
+        )
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
@@ -85,11 +88,11 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>) : RecyclerView.A
 
         override fun bindType(listWelcome: ListWelcome, adapterClickListener: AdapterClickListener) {
 
-            setWeatherUpPanel(listWelcome as ModelUpPanelFromDB)
+            setWeatherUpPanel(listWelcome as ModelUpPanel)
 
         }
 
-        fun setWeatherUpPanel(modelWeatherUpPanel: ModelUpPanelFromDB) {
+        fun setWeatherUpPanel(modelWeatherUpPanel: ModelUpPanel) {
 
             mView.apply {
                 adapter_image_main_city_name.text = modelWeatherUpPanel.id_city.toString()
@@ -104,15 +107,11 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>) : RecyclerView.A
     private class ViewHolderWeatherPerThreeHours(private var mView: View) : ViewHolder(mView) {
 
         private var listForAdapter = arrayListOf<ModelThreeHours>()
-        private lateinit var adapter:ThreeHoursAdapter
-
-        lateinit var modelList: ModelThreeHoursList
+        private lateinit var adapter: ThreeHoursAdapter
 
         override fun bindType(listWelcome: ListWelcome, adapterClickListener: AdapterClickListener) {
 
             setRv((listWelcome as ModelThreeHoursList), adapterClickListener)
-
-            modelList = listWelcome
 
         }
 

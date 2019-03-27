@@ -46,7 +46,7 @@ class WelcomeFragment : Fragment(), WelcomeView {
     private fun initRecyclerView() {
 
         recyclerView = fragment_welcome_rv
-        adapter = WelcomeAdapter(listWelcome)
+        adapter = WelcomeAdapter(listWelcome, welcomePresenter)
 
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter

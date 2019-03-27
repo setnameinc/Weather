@@ -5,7 +5,7 @@
     android:layout_height="120dp">
 
     <TextView
-        android:id="@+id/adapter_weather_week_for_hours_model_time"
+        android:id="@+id/adapter_weather_per_three_hours_model_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_thin"
@@ -18,17 +18,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/adapter_weather_week_for_hours_model_image"
+        android:id="@+id/adapter_weather_per_three_hours_model_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="#4A0F2c"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/adapter_weather_week_for_hours_model_temp"
+        android:id="@+id/adapter_weather_per_three_hours_model_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_thin"

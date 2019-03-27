@@ -7,30 +7,32 @@ import com.setname.weather.mvp.models.database.ModelWeatherForDB
 
 class InteractionsWithDatabase(context: Context) {
 
-    private var weatherDAO: WeatherDAO? = WeatherDatabase.getInstance(context).weatherDAO()
-
-    fun getAll(): List<ModelWeatherForDB>? = weatherDAO?.getAll()
-
-    fun getByCityCode(city_id: Long): List<ModelWeatherForDB>? = weatherDAO?.getByCityCode(city_id)
+    private var weatherDAO: WeatherDAO = WeatherDatabase.getInstance(context).weatherDAO()
 
     fun insertData(modelWeatherForDB: ModelWeatherForDB) {
 
-        weatherDAO?.insertData(modelWeatherForDB)
+        weatherDAO.insertData(modelWeatherForDB)
 
     }
 
     fun insertListData(list: List<ModelWeatherForDB>) {
 
-        weatherDAO?.insertListData(list)
+        weatherDAO.insertListData(list)
 
     }
 
     fun deleteUseless(time: Long) {
 
-        weatherDAO?.deleteUseless(time)
+        weatherDAO.deleteUseless(time)
 
     }
 
-    fun getUpPanelByCityId(city_id: Long) = weatherDAO?.getUpPanelByCityId(city_id)
+    fun getUpPanel(id_city:Long, id_dt:Long) = weatherDAO.getUpPanel(id_city = id_city, id_dt = id_dt)
+
+    fun getThreeHours(id_city: Long, id_dt: Long) = weatherDAO.getThreeHours(id_city = id_city, id_dt = id_dt, limit = 8)
+
+    fun getMinDt(id_city: Long) = weatherDAO.getMinDt(id_city)
+
+    fun getDays(id_city: Long) = weatherDAO.getDays(id_city, 8)//32400000 is 3pm
 
 }

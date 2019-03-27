@@ -2,10 +2,8 @@ package com.setname.weather.mvp.presenters.welcome
 
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
 import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
-import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
 import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
-import com.setname.weather.mvp.models.database.ModelWeatherForDB
 import com.setname.weather.mvp.models.retrofit.ModelResponse
 import com.setname.weather.mvp.presenters.welcome.with_db.InteractionsWithDatabase
 import com.setname.weather.mvp.retrofit.WeatherAPIService
@@ -36,8 +34,6 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
         deleteUselessData()
 
-        //load current data, if it offline, load minInDB
-
         fun getForecastFromServer(cityId: Long) = weatherAPIService.getForecastByCityId(cityId)
 
         getForecastFromServer(cityID).enqueue(object : Callback<ModelResponse> {
@@ -46,8 +42,7 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
                 val response = response!!.body()!!
 
-
-
+                //insert to DB
 
                 return
 
@@ -60,6 +55,11 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
         setWeather(cityID)
 
     }
+
+    fun getThreeHours(id_city: Long, id_dt: Long) =
+        interactionsWithDatabase.getThreeHours(id_city = id_city, id_dt = id_dt)
+
+    fun getUpPanel(id_city: Long, id_dt: Long) = interactionsWithDatabase.getUpPanel(id_city = id_city, id_dt = id_dt)
 
     private fun deleteUselessData() {
 
@@ -74,39 +74,23 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     }
 
-    private fun getAll() = interactionsWithDatabase.getAll()
+    private fun setWeather(id_city: Long) {
 
-    private fun setWeather(cityID: Long) {
+        val id_dt = interactionsWithDatabase.getMinDt(id_city)
 
         welcomeView.setWeather(
+
             listOf(
-                interactionsWithDatabase.getUpPanelByCityId(cityID)!!,
+
+                interactionsWithDatabase.getUpPanel(id_city, id_dt),
+
                 ModelThreeHoursList(
-                    listOf(
-                        ModelThreeHours(1L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelThreeHours(2L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelThreeHours(3L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelThreeHours(4L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelThreeHours(5L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelThreeHours(6L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelThreeHours(7L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelThreeHours(8L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelThreeHours(9L, "http://openweathermap.org/img/w/01n.png", 2f, 18918)
-                    )
+
+                    interactionsWithDatabase.getThreeHours(id_city, id_dt)
+
                 ), ModelDayList(
 
-                    listOf(
-
-                        ModelDay(10L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelDay(11L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelDay(12L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelDay(13L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelDay(14L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelDay(15L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelDay(16L, "http://openweathermap.org/img/w/01n.png", 2f, 18918),
-                        ModelDay(17L, "http://openweathermap.org/img/w/01n.png", 2f, 18918)
-
-                    )
+                    interactionsWithDatabase.getDays(id_city)
 
                 )
             )

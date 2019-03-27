@@ -1,8 +1,16 @@
 package com.setname.weather.mvp.models.adapter.welcome.hour
 
+import android.arch.persistence.room.ColumnInfo
+
 data class ModelThreeHours(
-    val dt: Long,
-    val image_url: String,
+
+    @ColumnInfo(name = "id_dt")
+    val id_dt: Long,
+    @ColumnInfo(name = "id_city")
+    val id_city: Long,
+    @ColumnInfo(name = "temp")
     val temp: Float,
-    val id_city:Long
+    @ColumnInfo(name = "icon")
+    val image_url: String
+
 )
