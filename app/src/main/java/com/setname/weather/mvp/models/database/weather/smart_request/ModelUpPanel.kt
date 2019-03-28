@@ -1,9 +1,9 @@
-package com.setname.weather.mvp.models.database.smart_request
+package com.setname.weather.mvp.models.database.weather.smart_request
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.TypeConverters
 import com.setname.weather.mvp.interfaces.welcome.adapter.list_main.ListWelcome
-import com.setname.weather.mvp.models.database.model_up_panel.ModelUpPanelForDB
+import com.setname.weather.mvp.models.database.weather.model_up_panel.ModelUpPanelForDB
 import org.json.JSONObject
 
 data class ModelUpPanel(

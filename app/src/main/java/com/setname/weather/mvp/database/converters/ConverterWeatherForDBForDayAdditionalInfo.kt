@@ -3,7 +3,7 @@ package com.setname.weather.mvp.database.converters
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.setname.weather.mvp.models.database.day.additional.ModelWeatherForDBForDayAdditionalInfo
+import com.setname.weather.mvp.models.database.weather.day.additional.ModelWeatherForDBForDayAdditionalInfo
 
 class ConverterWeatherForDBForDayAdditionalInfo {
 

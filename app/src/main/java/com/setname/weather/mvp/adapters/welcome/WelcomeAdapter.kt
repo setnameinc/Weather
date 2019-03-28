@@ -14,7 +14,7 @@ import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
 import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
 import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
-import com.setname.weather.mvp.models.database.smart_request.ModelUpPanel
+import com.setname.weather.mvp.models.database.weather.smart_request.ModelUpPanel
 import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.poor.AppContext
@@ -55,7 +55,7 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
                 viewViewHolder =
                     LayoutInflater.from(parent.context).inflate(R.layout.adapter_weather_up_panel, parent, false)
 
-                ViewHolderWeatherUpPanel(viewViewHolder)
+                ViewHolderWeatherUpPanel(viewViewHolder, welcomePresenter)
 
             }
 
@@ -82,7 +82,8 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
         }
     }
 
-    private class ViewHolderWeatherUpPanel(private var mView: View) : ViewHolder(mView) {
+    private class ViewHolderWeatherUpPanel(private val mView: View, private val welcomePresenter: WelcomePresenter) :
+        ViewHolder(mView) {
 
         override fun bindType(listWelcome: ListWelcome, adapterClickListener: AdapterClickListener) {
 
@@ -94,9 +95,13 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
         fun setWeatherUpPanel(modelWeatherUpPanel: ModelUpPanel) {
 
             mView.apply {
-                adapter_image_main_city_name.text = modelWeatherUpPanel.id_city.toString()
+
+                if (adapter_image_main_city_name.text != welcomePresenter.getPlace(modelWeatherUpPanel.id_city).name_city) {
+                    adapter_image_main_city_name.text = welcomePresenter.getPlace(modelWeatherUpPanel.id_city).name_city
+                }
                 adapter_image_main_city_desc.text = modelWeatherUpPanel.model_up_panel.description
                 adapter_image_main_current_temp.text = "${Math.round(modelWeatherUpPanel.temp)}°"
+
             }
 
         }

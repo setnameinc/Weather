@@ -3,7 +3,7 @@ package com.setname.weather.mvp.presenters.welcome
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
 import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
 import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
-import com.setname.weather.mvp.models.database.ModelWeatherForDB
+import com.setname.weather.mvp.models.database.weather.ModelWeatherForDB
 import com.setname.weather.mvp.models.retrofit.ModelResponse
 import com.setname.weather.mvp.presenters.welcome.with_db.InteractionsWithDatabase
 import com.setname.weather.mvp.retrofit.WeatherAPIService
@@ -30,13 +30,13 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
         InteractionsWithDatabase(AppContext.applicationContext())
     }
 
-    fun setForecast(cityID: Long) {
+    fun setForecast(id_city: Long) {
 
         deleteUselessData()
 
         fun getForecastFromServer(cityId: Long) = weatherAPIService.getForecastByCityId(cityId)
 
-        getForecastFromServer(cityID).enqueue(object : Callback<ModelResponse> {
+        getForecastFromServer(id_city).enqueue(object : Callback<ModelResponse> {
 
             override fun onResponse(call: Call<ModelResponse>?, response: Response<ModelResponse>?) {
 
@@ -52,7 +52,9 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
         })
 
-        setWeather(cityID)
+        setWeather(id_city)
+
+        //TODO("add coroutine")//crushing when DB is empty
 
     }
 
@@ -60,6 +62,8 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
         interactionsWithDatabase.getThreeHours(id_city = id_city, id_dt = id_dt)
 
     fun getUpPanel(id_city: Long, id_dt: Long) = interactionsWithDatabase.getUpPanel(id_city = id_city, id_dt = id_dt)
+
+    fun getPlace(id_city: Long) = interactionsWithDatabase.getPlace(id_city)
 
     private fun deleteUselessData() {
 
@@ -72,9 +76,10 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
         fun List<ModelWeatherForDB>.lastModelInDB(): Int =
             this.map { it.id_dt }.indexOf(interactionsWithDatabase.getLastDt(this[0].id_city))
 
-        fun insertListToDB(){
+        fun insertWeatherListToDB() {
 
-            val list: List<ModelWeatherForDB> = ConverterResponseToDBType.convertResponseToDBType(modelResponse)
+            val list: List<ModelWeatherForDB> =
+                ConverterResponseToDBType.convertResponseToWeatherTableType(modelResponse)
 
             if (list.isNotEmpty()) {
 
@@ -82,7 +87,7 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
                 if (listForInsert.isNotEmpty()) {
 
-                    interactionsWithDatabase.insertListData(listForInsert)
+                    interactionsWithDatabase.insertWeatherListData(listForInsert)
 
                 }
 
@@ -90,7 +95,20 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
         }
 
-        insertListToDB()
+        fun insertPlaceToDB() {
+
+            val place = ConverterResponseToDBType.convertResponseToPlaceTableType(modelResponse)
+
+            if (interactionsWithDatabase.isPlaceNotExist(place.id_city)) {
+
+                interactionsWithDatabase.insertPlaceData(place)
+
+            }
+
+        }
+
+        insertWeatherListToDB()
+        insertPlaceToDB()
 
     }
 

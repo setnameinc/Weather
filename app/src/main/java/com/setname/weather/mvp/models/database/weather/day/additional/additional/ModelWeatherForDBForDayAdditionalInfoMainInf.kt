@@ -1,4 +1,4 @@
-package com.setname.weather.mvp.models.database.day.additional.additional
+package com.setname.weather.mvp.models.database.weather.day.additional.additional
 
 import com.setname.weather.mvp.models.retrofit.weather.ModelWeatherMainInf
 

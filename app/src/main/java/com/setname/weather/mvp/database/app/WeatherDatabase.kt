@@ -8,9 +8,10 @@ import android.content.Context
 import com.setname.weather.mvp.database.converters.ConverterWeatherForDBForDayAdditionalInfo
 import com.setname.weather.mvp.database.converters.ConverterModelUpPanelForDB
 import com.setname.weather.mvp.database.dao.WeatherDAO
-import com.setname.weather.mvp.models.database.ModelWeatherForDB
+import com.setname.weather.mvp.models.database.place.ModelPlace
+import com.setname.weather.mvp.models.database.weather.ModelWeatherForDB
 
-@Database(entities = arrayOf(ModelWeatherForDB::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(ModelWeatherForDB::class, ModelPlace::class), version = 1, exportSchema = false)
 @TypeConverters(ConverterModelUpPanelForDB::class, ConverterWeatherForDBForDayAdditionalInfo::class)
 
 abstract class WeatherDatabase: RoomDatabase(){

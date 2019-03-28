@@ -3,7 +3,7 @@ package com.setname.weather.mvp.database.converters
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.setname.weather.mvp.models.database.model_up_panel.ModelUpPanelForDB
+import com.setname.weather.mvp.models.database.weather.model_up_panel.ModelUpPanelForDB
 
 class ConverterModelUpPanelForDB{
 

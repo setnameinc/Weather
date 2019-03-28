@@ -3,21 +3,22 @@ package com.setname.weather.mvp.presenters.welcome.with_db
 import android.content.Context
 import com.setname.weather.mvp.database.app.WeatherDatabase
 import com.setname.weather.mvp.database.dao.WeatherDAO
-import com.setname.weather.mvp.models.database.ModelWeatherForDB
+import com.setname.weather.mvp.models.database.place.ModelPlace
+import com.setname.weather.mvp.models.database.weather.ModelWeatherForDB
 
 class InteractionsWithDatabase(context: Context) {
 
     private var weatherDAO: WeatherDAO = WeatherDatabase.getInstance(context).weatherDAO()
 
-    fun insertData(modelWeatherForDB: ModelWeatherForDB) {
+    fun insertWeatherData(modelWeatherForDB: ModelWeatherForDB) {
 
-        weatherDAO.insertData(modelWeatherForDB)
+        weatherDAO.insertWeatherData(modelWeatherForDB)
 
     }
 
-    fun insertListData(list: List<ModelWeatherForDB>) {
+    fun insertWeatherListData(list: List<ModelWeatherForDB>) {
 
-        weatherDAO.insertListData(list)
+        weatherDAO.insertWeatherListData(list)
 
     }
 
@@ -40,5 +41,18 @@ class InteractionsWithDatabase(context: Context) {
     fun testDeleteAll(){
         weatherDAO.testDeleteAll()
     }
+
+    fun insertPlaceData(modelPlace: ModelPlace){
+
+        weatherDAO.insertPlaceData(modelPlace)
+
+    }
+
+    fun getPlaces() = weatherDAO.getPlaces()
+
+    fun isPlaceNotExist(id_city: Long) = weatherDAO.getNumberOfMathes(id_city) == 0L
+
+    fun getPlace(id_city: Long) = weatherDAO.getPlace(id_city)
+
 
 }

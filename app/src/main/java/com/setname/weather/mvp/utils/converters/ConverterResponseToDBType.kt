@@ -1,14 +1,15 @@
 package com.setname.weather.mvp.utils.converters
 
-import com.setname.weather.mvp.models.database.ModelWeatherForDB
-import com.setname.weather.mvp.models.database.day.additional.ModelWeatherForDBForDayAdditionalInfo
-import com.setname.weather.mvp.models.database.day.additional.additional.ModelWeatherForDBForDayAdditionalInfoMainInf
-import com.setname.weather.mvp.models.database.model_up_panel.ModelUpPanelForDB
+import com.setname.weather.mvp.models.database.place.ModelPlace
+import com.setname.weather.mvp.models.database.weather.ModelWeatherForDB
+import com.setname.weather.mvp.models.database.weather.day.additional.ModelWeatherForDBForDayAdditionalInfo
+import com.setname.weather.mvp.models.database.weather.day.additional.additional.ModelWeatherForDBForDayAdditionalInfoMainInf
+import com.setname.weather.mvp.models.database.weather.model_up_panel.ModelUpPanelForDB
 import com.setname.weather.mvp.models.retrofit.ModelResponse
 
 object ConverterResponseToDBType {
 
-    fun convertResponseToDBType(modelResponse: ModelResponse): List<ModelWeatherForDB> =
+    fun convertResponseToWeatherTableType(modelResponse: ModelResponse): List<ModelWeatherForDB> =
         modelResponse.list.map { modelWeatherList ->
             ModelWeatherForDB(
                 id_dt = modelWeatherList.dt,
@@ -20,7 +21,9 @@ object ConverterResponseToDBType {
                     modelWeatherList.weather[0].description
                 ),
                 additional = ModelWeatherForDBForDayAdditionalInfo(
-                    ModelWeatherForDBForDayAdditionalInfoMainInf(modelWeatherList.main),
+                    ModelWeatherForDBForDayAdditionalInfoMainInf(
+                        modelWeatherList.main
+                    ),
                     modelWeatherList.clouds,
                     modelWeatherList.wind
                 )
@@ -28,5 +31,10 @@ object ConverterResponseToDBType {
             )
         }.toList()
 
+    fun convertResponseToPlaceTableType(modelResponse: ModelResponse):ModelPlace = ModelPlace(
+        id_city = modelResponse.city.id,
+        name_city = modelResponse.city.name,
+        coord = modelResponse.city.coord.convertToOneStrLonLat()
+    )
 
 }
