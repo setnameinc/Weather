@@ -14,6 +14,7 @@ interface WeatherAPIService {
                             @Query("appid") apiId:String = "fabd53f6a71e2f82c551ff0c5eda930b",
                             @Query("units") units:String = "metric"): Call<ModelResponse>
 
+
     companion object {
 
         val retrofit: WeatherAPIService by lazy {

@@ -29,7 +29,9 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
             run {
                 clickListener.setThreeHoursPanel(
                     id_city = list[pos].id_city,
-                    id_dt = list[pos].id_dt
+                    id_dt = list[pos].id_dt - 64800L
+                    /*(-64800L) 3am - (15 hours(from middle forecast to start day)
+                     + 3 hours(UTC or openweatherforecast feature)) = 0pm*/
                 )
                 clickListener.setUpPanel(
                     id_city = list[pos].id_city,
@@ -73,7 +75,9 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         private fun TextView.setTime(dt: Long) {
 
-            this.text = DateFormat.format("EEEE", dt*1000).toString()
+            //(dt* 1000L) convert sec into millisec
+
+            this.text = DateFormat.format("EEEE", dt * 1000).toString()
 
         }
 

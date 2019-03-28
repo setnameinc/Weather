@@ -1,9 +1,9 @@
 package com.setname.weather.mvp.presenters.welcome
 
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
-import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
 import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
 import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
+import com.setname.weather.mvp.models.database.ModelWeatherForDB
 import com.setname.weather.mvp.models.retrofit.ModelResponse
 import com.setname.weather.mvp.presenters.welcome.with_db.InteractionsWithDatabase
 import com.setname.weather.mvp.retrofit.WeatherAPIService
@@ -32,7 +32,7 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     fun setForecast(cityID: Long) {
 
-        /*deleteUselessData()*/
+        deleteUselessData()
 
         fun getForecastFromServer(cityId: Long) = weatherAPIService.getForecastByCityId(cityId)
 
@@ -42,9 +42,7 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
                 val response = response!!.body()!!
 
-/*
-                interactionsWithDatabase.insertListData(ConverterResponseToDBType.convertResponseToDBType(response))
-*/
+                insertResponseToDB(response)
 
                 return
 
@@ -65,17 +63,34 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     private fun deleteUselessData() {
 
-        interactionsWithDatabase.deleteUseless((System.currentTimeMillis() - THREE_HOURS_IN_MS)/1000)
-
-        Logger.getLogger("WelcomePresenter").info("dif = ${System.currentTimeMillis() + THREE_HOURS_IN_MS}")
-
-        //load last forecast from server
+        interactionsWithDatabase.deleteUseless((System.currentTimeMillis() - THREE_HOURS_IN_MS) / 1000)
 
     }
 
-    private fun saveDataToDB(modelResponse: ModelResponse) {
+    private fun insertResponseToDB(modelResponse: ModelResponse) {
 
-        interactionsWithDatabase.insertListData(ConverterResponseToDBType.convertResponseToDBType(modelResponse))
+        fun List<ModelWeatherForDB>.lastModelInDB(): Int =
+            this.map { it.id_dt }.indexOf(interactionsWithDatabase.getLastDt(this[0].id_city))
+
+        fun insertListToDB(){
+
+            val list: List<ModelWeatherForDB> = ConverterResponseToDBType.convertResponseToDBType(modelResponse)
+
+            if (list.isNotEmpty()) {
+
+                val listForInsert = list.slice((list.lastModelInDB() + 1)..list.lastIndex)
+
+                if (listForInsert.isNotEmpty()) {
+
+                    interactionsWithDatabase.insertListData(listForInsert)
+
+                }
+
+            }
+
+        }
+
+        insertListToDB()
 
     }
 

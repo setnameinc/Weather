@@ -18,7 +18,6 @@ import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_up_panel.view.*
-import java.util.logging.Logger
 
 class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welcomePresenter: WelcomePresenter) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(),
@@ -34,8 +33,6 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
                 welcomePresenter.getThreeHours(id_dt = id_dt, id_city = id_city)
             )
         )
-
-        Logger.getLogger("Welcome").info("${welcomePresenter.getThreeHours(id_dt = id_dt, id_city = id_city)}")
 
     }
 

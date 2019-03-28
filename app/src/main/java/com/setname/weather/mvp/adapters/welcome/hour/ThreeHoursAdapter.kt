@@ -69,19 +69,16 @@ class ThreeHoursAdapter(private val list: ArrayList<ModelThreeHours>, private va
 
         private fun TextView.setTime(dt: Long) {
 
-            //problem with UTC
-            //check for London, Moscow
-            //Are UTC equally ?
-
-            val dt1 = dt-10800
-
-            if (System.currentTimeMillis()/1000 > dt1){
+            //check if it's now or not
+            if (System.currentTimeMillis()/1000 > dt){
 
                 this.text = "Now"
 
             } else {
 
-                this.text = DateFormat.format("dd HH a", dt1 * 1000L)
+                //(dt* 1000L) convert sec into millisec
+
+                this.text = DateFormat.format("H a", dt * 1000L)
 
             }
 

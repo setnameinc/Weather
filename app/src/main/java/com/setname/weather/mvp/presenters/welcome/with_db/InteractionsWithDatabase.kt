@@ -33,7 +33,9 @@ class InteractionsWithDatabase(context: Context) {
 
     fun getMinDt(id_city: Long) = weatherDAO.getMinDt(id_city)
 
-    fun getDays(id_city: Long) = weatherDAO.getDays(id_city, 8)//97200 is 1 day
+    fun getLastDt(id_city: Long) = weatherDAO.getLastDt(id_city)
+
+    fun getDays(id_city: Long) = weatherDAO.getDays(id_city, 15, 8)//97200 is 1 day
 
     fun testDeleteAll(){
         weatherDAO.testDeleteAll()
