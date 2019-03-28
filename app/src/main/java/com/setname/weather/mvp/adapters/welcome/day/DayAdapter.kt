@@ -69,7 +69,7 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         private fun TextView.setTemp(temp: Float) {
 
-            this.text = temp.toString()
+            this.text = "${Math.round(temp)}"
 
         }
 

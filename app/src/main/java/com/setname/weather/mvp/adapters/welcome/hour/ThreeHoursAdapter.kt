@@ -63,7 +63,7 @@ class ThreeHoursAdapter(private val list: ArrayList<ModelThreeHours>, private va
 
         private fun TextView.setTemp(temp: Float) {
 
-            this.text = temp.toString()
+            this.text = "${Math.round(temp)}"
 
         }
 

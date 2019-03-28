@@ -1,5 +1,6 @@
 package com.setname.weather.mvp.adapters.welcome
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -89,12 +90,13 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
 
         }
 
+        @SuppressLint("SetTextI18n")
         fun setWeatherUpPanel(modelWeatherUpPanel: ModelUpPanel) {
 
             mView.apply {
                 adapter_image_main_city_name.text = modelWeatherUpPanel.id_city.toString()
                 adapter_image_main_city_desc.text = modelWeatherUpPanel.model_up_panel.description
-                adapter_image_main_current_temp.text = modelWeatherUpPanel.temp.toString()
+                adapter_image_main_current_temp.text = "${Math.round(modelWeatherUpPanel.temp)}°"
             }
 
         }
