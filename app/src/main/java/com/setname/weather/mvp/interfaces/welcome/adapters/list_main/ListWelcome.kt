@@ -1,4 +1,4 @@
-package com.setname.weather.mvp.interfaces.welcome.adapter.list_main
+package com.setname.weather.mvp.interfaces.welcome.adapters.list_main
 
 abstract class ListWelcome {
 

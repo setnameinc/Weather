@@ -8,7 +8,6 @@ import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.models.database.place.ModelPlace
 import com.setname.weather.mvp.models.database.weather.ModelWeatherForDB
 import com.setname.weather.mvp.models.database.weather.smart_request.ModelUpPanel
-
 @Dao
 interface WeatherDAO {
 

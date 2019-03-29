@@ -19,7 +19,5 @@ data class ModelWeatherForDB(
     @ColumnInfo
     val temp: Float,
     @TypeConverters(JSONObject::class)
-    val model_up_panel: ModelUpPanelForDB,
-    @TypeConverters(JSONObject::class)
-    val additional: ModelWeatherForDBForDayAdditionalInfo
+    val model_up_panel: ModelUpPanelForDB
 )

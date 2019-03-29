@@ -3,11 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="350dp">
 
     <android.support.constraint.Guideline
-
-
         android:id="@+id/guideline_10_per_cent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,33 +25,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_10_per_cent" />
 
-    <TextView
-        android:id="@+id/adapter_image_main_city_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat"
-        android:text="Some clouds"
-        android:textColor="#212121"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adapter_image_main_city_name" />
-
-    <TextView
-        android:id="@+id/adapter_image_main_current_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="48dp"
-        android:fontFamily="@font/roboto_thin"
-        android:text="18"
-        android:textColor="#212121"
-        android:textSize="92sp"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/adapter_weather_up_panel_view_pager"
+        android:layout_width="0dp"
+        android:layout_height="235dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/adapter_image_main_city_desc" />
+        app:layout_constraintTop_toBottomOf="@+id/adapter_image_main_city_name" />
 
 </android.support.constraint.ConstraintLayout>

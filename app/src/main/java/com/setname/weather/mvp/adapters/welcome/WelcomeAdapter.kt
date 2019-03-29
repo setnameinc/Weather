@@ -1,6 +1,5 @@
 package com.setname.weather.mvp.adapters.welcome
 
-import android.annotation.SuppressLint
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,7 +8,8 @@ import android.view.ViewGroup
 import com.setname.weather.R
 import com.setname.weather.mvp.adapters.welcome.day.DayAdapter
 import com.setname.weather.mvp.adapters.welcome.hour.ThreeHoursAdapter
-import com.setname.weather.mvp.interfaces.welcome.adapter.list_main.ListWelcome
+import com.setname.weather.mvp.adapters.welcome.up_panel.UpPanelViewPagerAdapter
+import com.setname.weather.mvp.interfaces.welcome.adapters.list_main.ListWelcome
 import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
 import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
@@ -19,6 +19,7 @@ import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_up_panel.view.*
+import java.util.logging.Logger
 
 class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welcomePresenter: WelcomePresenter) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(),
@@ -91,10 +92,16 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
 
         }
 
-        @SuppressLint("SetTextI18n")
         fun setWeatherUpPanel(modelWeatherUpPanel: ModelUpPanel) {
 
             mView.apply {
+
+                adapter_weather_up_panel_view_pager.adapter =
+                    UpPanelViewPagerAdapter(welcomePresenter.getFragmentManager(), modelWeatherUpPanel)
+
+            }
+
+            /*mView.apply {
 
                 if (adapter_image_main_city_name.text != welcomePresenter.getPlace(modelWeatherUpPanel.id_city).name_city) {
                     adapter_image_main_city_name.text = welcomePresenter.getPlace(modelWeatherUpPanel.id_city).name_city
@@ -102,7 +109,7 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
                 adapter_image_main_city_desc.text = modelWeatherUpPanel.model_up_panel.description
                 adapter_image_main_current_temp.text = "${Math.round(modelWeatherUpPanel.temp)}°"
 
-            }
+            }*/
 
         }
 

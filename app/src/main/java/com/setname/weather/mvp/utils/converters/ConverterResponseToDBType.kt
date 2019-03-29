@@ -18,14 +18,14 @@ object ConverterResponseToDBType {
                 temp = modelWeatherList.main.temp,
                 model_up_panel = ModelUpPanelForDB(
                     modelWeatherList.weather[0].main,
-                    modelWeatherList.weather[0].description
-                ),
-                additional = ModelWeatherForDBForDayAdditionalInfo(
-                    ModelWeatherForDBForDayAdditionalInfoMainInf(
-                        modelWeatherList.main
-                    ),
-                    modelWeatherList.clouds,
-                    modelWeatherList.wind
+                    modelWeatherList.weather[0].description,
+                    ModelWeatherForDBForDayAdditionalInfo(
+                        ModelWeatherForDBForDayAdditionalInfoMainInf(
+                            modelWeatherList.main
+                        ),
+                        modelWeatherList.clouds,
+                        modelWeatherList.wind
+                    )
                 )
 
             )

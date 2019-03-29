@@ -55,4 +55,5 @@ class InteractionsWithDatabase(context: Context) {
     fun getPlace(id_city: Long) = weatherDAO.getPlace(id_city)
 
 
+
 }

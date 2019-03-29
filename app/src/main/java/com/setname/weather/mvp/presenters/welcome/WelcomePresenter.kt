@@ -1,6 +1,8 @@
 package com.setname.weather.mvp.presenters.welcome
 
+import android.support.v4.app.FragmentManager
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
+import com.setname.weather.mvp.interfaces.welcome.adapters.up_panel.view_pager.InteractionWithWelcomePresenterFromViewPager
 import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
 import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
 import com.setname.weather.mvp.models.database.weather.ModelWeatherForDB
@@ -14,7 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.logging.Logger
 
-class WelcomePresenter(private var welcomeView: WelcomeView) {
+class WelcomePresenter(private var welcomeView: WelcomeView): InteractionWithWelcomePresenterFromViewPager {
 
     private val THREE_HOURS_IN_MS = 10800000L
 
@@ -136,4 +138,5 @@ class WelcomePresenter(private var welcomeView: WelcomeView) {
 
     }
 
+    override fun getFragmentManager():FragmentManager = welcomeView.getSupportFragmentManager()
 }
