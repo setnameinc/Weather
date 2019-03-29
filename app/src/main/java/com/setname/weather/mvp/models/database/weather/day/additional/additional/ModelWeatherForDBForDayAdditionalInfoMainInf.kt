@@ -12,7 +12,9 @@ data class ModelWeatherForDBForDayAdditionalInfoMainInf(
 
     constructor(modelWeatherMainInf: ModelWeatherMainInf) : this(
         modelWeatherMainInf.pressure,
-        modelWeatherMainInf.sea_level, modelWeatherMainInf.grnd_level, modelWeatherMainInf.humidity,
+        modelWeatherMainInf.sea_level,
+        modelWeatherMainInf.grnd_level,
+        modelWeatherMainInf.humidity,
         modelWeatherMainInf.temp_kf
     )
 

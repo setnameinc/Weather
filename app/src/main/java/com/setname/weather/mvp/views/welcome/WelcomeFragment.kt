@@ -38,8 +38,6 @@ class WelcomeFragment : Fragment(), WelcomeView {
 
         initRecyclerView()
 
-
-
         welcomePresenter.setForecast(18918)
 
     }

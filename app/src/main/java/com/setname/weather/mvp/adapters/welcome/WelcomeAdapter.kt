@@ -40,7 +40,7 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
 
     override fun setUpPanel(id_city: Long, id_dt: Long) {
 
-        viewHolderUpPanel.setWeatherUpPanel(
+        viewHolderUpPanel.updateWeatherUpPanel(
 
             welcomePresenter.getUpPanel(id_city = id_city, id_dt = id_dt)
 
@@ -86,30 +86,44 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
     private class ViewHolderWeatherUpPanel(private val mView: View, private val welcomePresenter: WelcomePresenter) :
         ViewHolder(mView) {
 
+        private lateinit var upPanelViewPagerAdapter:UpPanelViewPagerAdapter
+
         override fun bindType(listWelcome: ListWelcome, adapterClickListener: AdapterClickListener) {
 
             setWeatherUpPanel(listWelcome as ModelUpPanel)
 
         }
 
-        fun setWeatherUpPanel(modelWeatherUpPanel: ModelUpPanel) {
+        fun setWeatherUpPanel(modelWeatherUpPanel: ModelUpPanel){
+
+            upPanelViewPagerAdapter = UpPanelViewPagerAdapter(welcomePresenter.getFragmentManager(), modelWeatherUpPanel)
 
             mView.apply {
 
                 adapter_weather_up_panel_view_pager.adapter =
-                    UpPanelViewPagerAdapter(welcomePresenter.getFragmentManager(), modelWeatherUpPanel)
-
-            }
-
-            /*mView.apply {
+                    upPanelViewPagerAdapter
 
                 if (adapter_image_main_city_name.text != welcomePresenter.getPlace(modelWeatherUpPanel.id_city).name_city) {
                     adapter_image_main_city_name.text = welcomePresenter.getPlace(modelWeatherUpPanel.id_city).name_city
                 }
-                adapter_image_main_city_desc.text = modelWeatherUpPanel.model_up_panel.description
-                adapter_image_main_current_temp.text = "${Math.round(modelWeatherUpPanel.temp)}°"
 
-            }*/
+            }
+
+        }
+
+        fun updateWeatherUpPanel(modelWeatherUpPanel: ModelUpPanel) {
+
+            mView.apply {
+
+                upPanelViewPagerAdapter.update(modelWeatherUpPanel)
+
+                if (adapter_image_main_city_name.text != welcomePresenter.getPlace(modelWeatherUpPanel.id_city).name_city) {
+                    adapter_image_main_city_name.text = welcomePresenter.getPlace(modelWeatherUpPanel.id_city).name_city
+                }
+
+                Logger.getLogger("Welcome").info("${modelWeatherUpPanel.temp}")
+
+            }
 
         }
 

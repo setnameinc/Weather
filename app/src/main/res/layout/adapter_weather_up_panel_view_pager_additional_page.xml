@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="235dp">
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_clouds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="Clouds"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="Wind"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_clouds" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_humidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="Humidity"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_wind" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_presure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="Pressure"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_humidity" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_sea_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="Sea level"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_presure" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_grnd_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="Ground level"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_sea_level" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_clouds_mutable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="TextView"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_clouds"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_wind_mutable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="TextView"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_wind"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_humidity_mutable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="TextView"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_humidity"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_presure_mutable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="TextView"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_presure"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_sea_level_mutable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="TextView"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_sea_level"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_grnd_level_mutable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/gudea"
+        android:text="TextView"
+        android:textSize="18dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_grnd_level"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+</android.support.constraint.ConstraintLayout>

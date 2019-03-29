@@ -3,21 +3,32 @@ package com.setname.weather.mvp.adapters.welcome.up_panel
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.PagerAdapter
+import android.view.ViewGroup
 import com.setname.weather.mvp.models.adapter.welcome.up_panel.view_pager.AdditionalModelUpPanel
 import com.setname.weather.mvp.models.adapter.welcome.up_panel.view_pager.MainModelUpPanel
 import com.setname.weather.mvp.views.welcome.adapter.up_panel.view_pager.AdditionalPageFragmentViewPagerUpPanel
 import com.setname.weather.mvp.views.welcome.adapter.up_panel.view_pager.MainPageFragmentViewPagerUpPanel
+import com.setname.weather.mvp.models.database.weather.smart_request.ModelUpPanel as ModelUpPanel
+import java.util.logging.Logger
 
 class UpPanelViewPagerAdapter constructor(
     fm: FragmentManager,
-    private val modelUpPanel: com.setname.weather.mvp.models.database.weather.smart_request.ModelUpPanel
+    private var modelUpPanel: ModelUpPanel
 ) : FragmentPagerAdapter(fm) {
+
+    private val log by lazy {
+
+        Logger.getLogger("ViewPager")
+
+    }
 
     private val COUNT = 2
 
     override fun getItem(position: Int): Fragment? =
         when (position) {
             0 -> {
+
                 MainPageFragmentViewPagerUpPanel.newInstance(
                     MainModelUpPanel(modelUpPanel)
                 )
@@ -31,4 +42,25 @@ class UpPanelViewPagerAdapter constructor(
     override fun getCount(): Int {
         return COUNT
     }
+
+    override fun getItemPosition(`object`: Any): Int {
+
+        if (`object` is MainPageFragmentViewPagerUpPanel){
+
+            `object`.update(MainModelUpPanel(modelUpPanel))
+
+        } else if (`object` is AdditionalPageFragmentViewPagerUpPanel){
+
+            `object`.update(AdditionalModelUpPanel(modelUpPanel))
+
+        }
+
+        return super.getItemPosition(`object`)
+    }
+
+    fun update(modelUpPanel:ModelUpPanel){
+        this.modelUpPanel = modelUpPanel
+        notifyDataSetChanged()
+    }
+
 }
