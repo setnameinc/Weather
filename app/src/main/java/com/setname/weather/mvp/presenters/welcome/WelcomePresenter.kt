@@ -63,7 +63,7 @@ class WelcomePresenter(private var welcomeView: WelcomeView) : InteractionWithWe
 
 
                 withContext(Dispatchers.IO) {
-                    
+
                     setWeather(id_city)
 
                 }
