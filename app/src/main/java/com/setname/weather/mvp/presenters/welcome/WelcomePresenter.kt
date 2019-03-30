@@ -2,21 +2,28 @@ package com.setname.weather.mvp.presenters.welcome
 
 import android.support.v4.app.FragmentManager
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
+import com.setname.weather.mvp.interfaces.welcome.adapters.list_main.ListWelcome
 import com.setname.weather.mvp.interfaces.welcome.adapters.up_panel.view_pager.InteractionWithWelcomePresenterFromViewPager
+import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
 import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
 import com.setname.weather.mvp.models.database.weather.ModelWeatherForDB
+import com.setname.weather.mvp.models.database.weather.smart_request.ModelUpPanel
 import com.setname.weather.mvp.models.retrofit.ModelResponse
 import com.setname.weather.mvp.presenters.welcome.with_db.InteractionsWithDatabase
 import com.setname.weather.mvp.retrofit.WeatherAPIService
 import com.setname.weather.mvp.utils.converters.ConverterResponseToDBType
 import com.setname.weather.mvp.utils.poor.AppContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.*
 import java.util.logging.Logger
 
-class WelcomePresenter(private var welcomeView: WelcomeView): InteractionWithWelcomePresenterFromViewPager {
+class WelcomePresenter(private var welcomeView: WelcomeView) : InteractionWithWelcomePresenterFromViewPager {
+
+    private val logger by lazy {
+
+        Logger.getLogger("Welcome")
+
+    }
 
     private val THREE_HOURS_IN_MS = 10800000L
 
@@ -34,29 +41,36 @@ class WelcomePresenter(private var welcomeView: WelcomeView): InteractionWithWel
 
     fun setForecast(id_city: Long) {
 
-        deleteUselessData()
+        CoroutineScope(Dispatchers.IO).launch {
 
-        fun getForecastFromServer(cityId: Long) = weatherAPIService.getForecastByCityId(cityId)
+            val request = weatherAPIService.getForecastByCityId(id_city)
 
-        getForecastFromServer(id_city).enqueue(object : Callback<ModelResponse> {
+            withContext(Dispatchers.IO) {
 
-            override fun onResponse(call: Call<ModelResponse>?, response: Response<ModelResponse>?) {
+                val response = request.await()
 
-                val response = response!!.body()!!
+                withContext(Dispatchers.IO) {
 
-                insertResponseToDB(response)
+                    deleteUselessData()
 
-                return
+                }
+
+                withContext(Dispatchers.IO) {
+
+                    insertResponseToDB(response.body()!!)
+
+                }
+
+
+                withContext(Dispatchers.IO) {
+                    
+                    setWeather(id_city)
+
+                }
 
             }
 
-            override fun onFailure(call: Call<ModelResponse>?, t: Throwable?) {}
-
-        })
-
-        setWeather(id_city)
-
-        //TODO("add coroutine")//crushing when DB is empty
+        }
 
     }
 
@@ -118,25 +132,44 @@ class WelcomePresenter(private var welcomeView: WelcomeView): InteractionWithWel
 
         val id_dt = interactionsWithDatabase.getMinDt(id_city)
 
-        welcomeView.setWeather(
+        CoroutineScope(Dispatchers.IO).launch {
 
-            listOf(
+            val modelUpPanel = async {
 
-                interactionsWithDatabase.getUpPanel(id_city, id_dt),
+                interactionsWithDatabase.getUpPanel(id_city, id_dt)
+
+            }
+
+            val modelThreeHours = async {
 
                 ModelThreeHoursList(
 
                     interactionsWithDatabase.getThreeHours(id_city, id_dt)
 
-                ), ModelDayList(
+                )
+
+            }
+
+            val modelListDays = async {
+
+                ModelDayList(
 
                     interactionsWithDatabase.getDays(id_city)
 
                 )
-            )
-        )
+
+            }
+
+            withContext(Dispatchers.IO){
+
+                welcomeView.setWeather(listOf(modelUpPanel.await(), modelThreeHours.await(), modelListDays.await()))
+
+            }
+
+        }
 
     }
 
-    override fun getFragmentManager():FragmentManager = welcomeView.getSupportFragmentManager()
+    override fun getFragmentManager(): FragmentManager = welcomeView.getSupportFragmentManager()
+
 }

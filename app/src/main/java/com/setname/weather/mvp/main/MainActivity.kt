@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import com.setname.weather.R
+import com.setname.weather.mvp.views.welcome.GestureTest
 import com.setname.weather.mvp.views.welcome.WelcomeFragment
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +22,12 @@ class MainActivity : AppCompatActivity() {
             WelcomeFragment()
         ).commit()
 
+        /*supportFragmentManager.beginTransaction().replace(
+            R.id.main_container,
+            GestureTest()
+        ).commit()*/
+
     }
+
 }
 

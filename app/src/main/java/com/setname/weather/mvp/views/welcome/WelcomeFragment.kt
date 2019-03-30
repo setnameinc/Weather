@@ -14,9 +14,18 @@ import com.setname.weather.mvp.interfaces.welcome.WelcomeView
 import com.setname.weather.mvp.interfaces.welcome.adapters.list_main.ListWelcome
 import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
 import kotlinx.android.synthetic.main.fragment_welcome.*
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.logging.Logger
 
 class WelcomeFragment : Fragment(), WelcomeView {
+
+    private val logger by lazy {
+
+        Logger.getLogger("Welcome")
+
+    }
 
     override fun getSupportFragmentManager(): FragmentManager = fragmentManager!!
 
@@ -54,7 +63,15 @@ class WelcomeFragment : Fragment(), WelcomeView {
     }
 
     override fun setWeather(listView: List<ListWelcome>) {
+
         listWelcome.addAll(listView)
+
+        CoroutineScope(Dispatchers.Main).launch{
+
+            adapter.notifyDataSetChanged()
+
+        }
+
     }
 
     override fun showLoading() {
