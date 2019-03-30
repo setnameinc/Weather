@@ -43,7 +43,7 @@ class AdditionalPageFragmentViewPagerUpPanel : Fragment(), UpdateViewPager {
             adapter_weather_up_panel_view_pager_additional_page_clouds_mutable.text =
                 "${additionalModelUpPanel.clouds.all}%"
             adapter_weather_up_panel_view_pager_additional_page_wind_mutable.text =
-                "${Math.round(additionalModelUpPanel.wind.speed)}m/s"
+                "${Math.round(additionalModelUpPanel.wind.speed)} m/s"
             adapter_weather_up_panel_view_pager_additional_page_humidity_mutable.text =
                 additionalModelUpPanel.info.humidity.toString()
             adapter_weather_up_panel_view_pager_additional_page_presure_mutable.text =

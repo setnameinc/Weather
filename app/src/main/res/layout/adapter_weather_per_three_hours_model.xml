@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="80dp"
-    android:layout_height="120dp">
+    android:layout_height="116dp">
 
     <TextView
         android:id="@+id/adapter_weather_per_three_hours_model_time"
@@ -10,8 +10,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_thin"
         android:text="Now"
-        android:textSize="16sp"
         android:textColor="#212121"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/adapter_weather_per_three_hours_model_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/adapter_weather_per_three_hours_model_image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

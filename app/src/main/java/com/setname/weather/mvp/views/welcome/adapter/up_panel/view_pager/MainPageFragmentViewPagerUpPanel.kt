@@ -32,13 +32,14 @@ class MainPageFragmentViewPagerUpPanel : Fragment(), UpdateViewPager {
         return viewLocal
     }
 
-    private fun setView(modelUpPanel:MainModelUpPanel){
+    private fun setView(modelUpPanel: MainModelUpPanel) {
 
         log.info("${modelUpPanel.temp}")
 
         viewLocal.apply {
 
-            adapter_weather_up_panel_view_pager_main_page_desc.text = modelUpPanel.desc
+            adapter_weather_up_panel_view_pager_main_page_desc.text =
+                modelUpPanel.desc.replaceFirst(modelUpPanel.desc[0], modelUpPanel.desc[0].toUpperCase())
 
             adapter_weather_up_panel_view_pager_main_page_current_temp.text = Math.round(modelUpPanel.temp).toString()
 

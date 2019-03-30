@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="235dp">
+    android:layout_height="210dp">
 
     <TextView
         android:id="@+id/adapter_weather_up_panel_view_pager_additional_page_clouds"
@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/gudea"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"
         android:text="Clouds"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -23,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="Wind"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="Wind"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_clouds" />
@@ -35,8 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="Humidity"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="Humidity"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_wind" />
@@ -47,8 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="Pressure"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="Pressure"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_humidity" />
@@ -59,8 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="Sea level"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="Sea level"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_presure" />
@@ -71,8 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="Ground level"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="Ground level"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/adapter_weather_up_panel_view_pager_additional_page_sea_level" />
@@ -89,8 +90,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="TextView"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="TextView"
         android:textSize="18dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_clouds"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
@@ -100,8 +101,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="TextView"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="TextView"
         android:textSize="18dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_wind"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
@@ -111,8 +112,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="TextView"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="TextView"
         android:textSize="18dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_humidity"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
@@ -122,8 +123,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="TextView"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="TextView"
         android:textSize="18dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_presure"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
@@ -133,8 +134,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="TextView"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="TextView"
         android:textSize="18dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_sea_level"
         app:layout_constraintStart_toStartOf="@+id/guideline" />
@@ -144,8 +145,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:fontFamily="@font/gudea"
-        android:text="TextView"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="#000000"        android:text="TextView"
         android:textSize="18dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/adapter_weather_up_panel_view_pager_additional_page_grnd_level"
         app:layout_constraintStart_toStartOf="@+id/guideline" />

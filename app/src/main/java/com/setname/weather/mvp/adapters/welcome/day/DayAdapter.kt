@@ -13,6 +13,8 @@ import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.expand.listen
 import kotlinx.android.synthetic.main.adapter_weather_per_day_model.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.logging.Logger
 
 class DayAdapter(private val list: List<ModelDay>, private val clickListener: AdapterClickListener) :
@@ -77,7 +79,7 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
             //(dt* 1000L) convert sec into millisec
 
-            this.text = DateFormat.format("EEEE", dt * 1000).toString()
+            this.text = SimpleDateFormat("EEEE", Locale.ENGLISH).format(dt * 1000).toString()
 
         }
 

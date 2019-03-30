@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="235dp">
+    android:layout_height="210dp">
 
     <TextView
         android:id="@+id/adapter_weather_up_panel_view_pager_main_page_current_temp"
@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_thin"
         android:text="18"
-        android:textColor="#212121"
+        android:textColor="#616161"
         android:textSize="92sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
         android:text="Some clouds"
-        android:textColor="#212121"
+        android:textColor="#616161"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
