@@ -4,5 +4,5 @@ MVP, Retrofit2, MultiAdapter.
 
 Coroutines testing.
 
-Now now fully complited.
+Now not fully complited.
 
