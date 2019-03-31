@@ -3,6 +3,7 @@ package com.setname.weather.mvp.views.welcome
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -17,9 +18,12 @@ import kotlinx.android.synthetic.main.fragment_welcome.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.logging.Logger
 
 class WelcomeFragment : Fragment(), WelcomeView {
+
+    private val ID_CITY:Long = 18918
 
     private val logger by lazy {
 
@@ -32,8 +36,8 @@ class WelcomeFragment : Fragment(), WelcomeView {
     private lateinit var viewWelcome: View
 
     private var welcomePresenter: WelcomePresenter = WelcomePresenter(this)
-    private lateinit var recyclerView: RecyclerView
 
+    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: WelcomeAdapter
     private var listWelcome: ArrayList<ListWelcome> = arrayListOf()
 
@@ -47,7 +51,7 @@ class WelcomeFragment : Fragment(), WelcomeView {
 
         initRecyclerView()
 
-        welcomePresenter.setForecast(18918)
+        welcomePresenter.setForecast(ID_CITY)
 
     }
 
@@ -59,11 +63,32 @@ class WelcomeFragment : Fragment(), WelcomeView {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = adapter
 
+        fragment_welcome_swipe_refresh.setOnRefreshListener {
+
+            CoroutineScope(Dispatchers.Default).launch {
+
+                withContext(Dispatchers.IO){
+
+                    welcomePresenter.setForecast(ID_CITY)
+
+                }
+
+                withContext(Dispatchers.Main){
+
+                    fragment_welcome_swipe_refresh.isRefreshing = false
+
+                }
+
+            }
+
+        }
+
 
     }
 
     override fun setWeather(listView: List<ListWelcome>) {
 
+        listWelcome.clear()
         listWelcome.addAll(listView)
 
         CoroutineScope(Dispatchers.Main).launch{
@@ -72,14 +97,6 @@ class WelcomeFragment : Fragment(), WelcomeView {
 
         }
 
-    }
-
-    override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 
