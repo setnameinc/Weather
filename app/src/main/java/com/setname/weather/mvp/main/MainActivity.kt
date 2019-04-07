@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.setname.weather.R
+import com.setname.weather.mvp.views.welcome.GestureTest
 import com.setname.weather.mvp.views.welcome.WelcomeFragment
 
 class MainActivity : AppCompatActivity() {
@@ -13,15 +14,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportFragmentManager.beginTransaction().replace(
-            R.id.main_container,
-            WelcomeFragment()
-        ).commit()
-
         /*supportFragmentManager.beginTransaction().replace(
             R.id.main_container,
-            GestureTest()
+            WelcomeFragment()
         ).commit()*/
+
+        supportFragmentManager.beginTransaction().replace(
+            R.id.main_container,
+            GestureTest()
+        ).commit()
 
     }
 
