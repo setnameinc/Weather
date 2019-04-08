@@ -1,8 +1,5 @@
 package com.setname.weather.mvp.utils.gestures.pinch
 
-import android.content.Context
-import android.util.DisplayMetrics
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -10,31 +7,87 @@ import android.view.ViewConfiguration
 
 class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
 
+    private enum class Finger(val number: Int){
+        PRIMARY(0),
+        SECOND(1);
+    }
+
     private val SCREEN_HEIGTH = 1920f;
 
+    /**
+     * Number of fingers at screen at the same time
+     */
     private var ptrCount = 0
 
+    /**
+     * Start y coordinate for primary and second fingers
+     */
     private var primaryStartTouchEventY = -1f
     private var secondStartTouchEventY = -1f
 
-    private var primarySecondStartTouchDistance = 0f
+    /**
+     * The first distance
+     * Initialized as soon as the second finger move down
+     */
+    private var primaryToSecondStartTouchDistance = 0f
+
     private var viewScaledTouchSlop = 0
 
+    /**
+     * The previous distance between primary and second fingers
+     */
     private var previousDistance = 0f
 
+    /**
+     * The finish y coordinate position after folding
+     */
     private val END_Y = 400f
+
+    /**
+     * The finish view size in PX after folding
+     */
     private val END_SIZE: Float = 200f
-    private val PRIMARY_SECOND_DISTANCE = 200f
 
-    private val UP_ZONE = 100f
-    private val DOWN_ZONE = 1820f
-
-    private val INTERACTION_ZONE = DOWN_ZONE - UP_ZONE
-    private val INTERACTION_ZONE_FOR_PINCH = DOWN_ZONE - UP_ZONE - PRIMARY_SECOND_DISTANCE
-
+    /**
+     * Like END_SIZE but in scale format
+     */
     private val END_SCALE: Float = END_SIZE / SCREEN_HEIGTH
 
+    /**
+     * Min distance between fingers
+     */
+    private val PRIMARY_TO_SECOND_DISTANCE = 200f
+
+    /**
+     * Upper zone for finger
+     */
+    private val UP_ZONE = 100f
+
+    /**
+     * Lower zone for finger
+     */
+    private val BOTTOM_ZONE = 1820f
+
+    /**
+     * UP_ZONE and BOTTOM_ZONE are the zones for fingers there listener would register fingers
+     */
+
+    /**
+     * Is the zone there interactions would happend
+     */
+    private val INTERACTION_ZONE = BOTTOM_ZONE - UP_ZONE
+
+
+    private val INTERACTION_ZONE_FOR_PINCH = BOTTOM_ZONE - UP_ZONE - PRIMARY_TO_SECOND_DISTANCE
+
+    /**
+     * The var using for scale calculating
+     */
     private var scaleY = 0f
+
+    /**
+     * The var using for move calculating
+     */
     private var moveY = 0f
 
     init {
@@ -48,15 +101,15 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
         when (action) {
 
             MotionEvent.ACTION_POINTER_DOWN, MotionEvent.ACTION_DOWN -> {
-
                 ptrCount++
+
                 if (ptrCount == 2) {
 
                     previousDistance = Float.MIN_VALUE
-                    secondStartTouchEventY = event.getY(1)
-                    primarySecondStartTouchDistance = distance(event, 0, 1)
+                    secondStartTouchEventY = event.getY(Finger.SECOND.number)
+                    primaryToSecondStartTouchDistance = distance(event, Finger.PRIMARY.number, Finger.SECOND.number)
 
-                    if (primarySecondStartTouchDistance > 0) {
+                    if (primaryToSecondStartTouchDistance > 0) {
 
                         scaleY = -(SCREEN_HEIGTH - END_SIZE) / (SCREEN_HEIGTH * INTERACTION_ZONE_FOR_PINCH)
                         moveY = -(SCREEN_HEIGTH / 2 - UP_ZONE - END_Y) / INTERACTION_ZONE_FOR_PINCH
@@ -94,20 +147,20 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
 
             MotionEvent.ACTION_MOVE -> {
 
-                val localDistance = distance(event, 0, 1)
+                val localDistance = distance(event, Finger.PRIMARY.number, Finger.SECOND.number)
 
-                val isPrimMoving = isScrollGesture(event, 0, primaryStartTouchEventY)
-                val isSecMoving = ptrCount > 1 && isScrollGesture(event, 1, secondStartTouchEventY)
+                val isPrimMoving = isScrollGesture(event, Finger.PRIMARY.number, primaryStartTouchEventY)
+                val isSecMoving = ptrCount > 1 && isScrollGesture(event, Finger.SECOND.number, secondStartTouchEventY)
 
                 if (isSecMoving) {
 
                     if (isPrimMoving && isSecMoving) {
 
-                        if (Math.abs(primarySecondStartTouchDistance) > INTERACTION_ZONE) {
+                        if (Math.abs(primaryToSecondStartTouchDistance) > INTERACTION_ZONE) {
 
                             if (Math.abs(localDistance) < INTERACTION_ZONE) {
 
-                                if (Math.abs(localDistance) > PRIMARY_SECOND_DISTANCE) {
+                                if (Math.abs(localDistance) > PRIMARY_TO_SECOND_DISTANCE) {
 
                                     if (previousDistance != Float.MIN_VALUE) {
 
