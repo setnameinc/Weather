@@ -14,15 +14,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*supportFragmentManager.beginTransaction().replace(
-            R.id.main_container,
-            WelcomeFragment()
-        ).commit()*/
-
         supportFragmentManager.beginTransaction().replace(
             R.id.main_container,
-            GestureTest()
+            WelcomeFragment()
         ).commit()
+
+        /*supportFragmentManager.beginTransaction().replace(
+            R.id.main_container,
+            GestureTest()
+        ).commit()*/
 
     }
 
