@@ -2,6 +2,7 @@ package com.setname.weather.mvp.utils.gestures.pinch
 
 import android.content.Context
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -93,6 +94,8 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
 
             MotionEvent.ACTION_MOVE -> {
 
+                val localDistance = distance(event, 0, 1)
+
                 val isPrimMoving = isScrollGesture(event, 0, primaryStartTouchEventY)
                 val isSecMoving = ptrCount > 1 && isScrollGesture(event, 1, secondStartTouchEventY)
 
@@ -102,11 +105,9 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
 
                         if (Math.abs(primarySecondStartTouchDistance) > INTERACTION_ZONE) {
 
-                            val localDistance = distance(event, 0, 1)
-
                             if (Math.abs(localDistance) < INTERACTION_ZONE) {
 
-                                if (v.scaleY > END_SCALE) {
+                                if (Math.abs(localDistance) > PRIMARY_SECOND_DISTANCE) {
 
                                     if (previousDistance != Float.MIN_VALUE) {
 
@@ -115,11 +116,32 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
 
                                     }
 
-                                    previousDistance = localDistance
+                                }
+
+                                previousDistance = localDistance
+
+                            }
+
+                        } else if (v.scaleY < 1) {
+
+                            if (Math.abs(localDistance) < INTERACTION_ZONE) {
+
+                                if (previousDistance != Float.MIN_VALUE) {
+
+                                    val calcScale = calculateScale(v, localDistance, scaleY)
+
+                                    if (calcScale > END_SCALE) {
+
+                                        v.scaleY = calcScale
+                                        moveView(v, localDistance, moveY)
+
+                                    }
 
                                 }
 
                             }
+
+                            previousDistance = localDistance
 
                         }
 
@@ -133,24 +155,24 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
         return true
     }
 
-    private fun scaleView(v: View, distance: Float, mScale: Float) {
+    private fun calculateScale(v: View, distance: Float, mScale: Float): Float {
 
-        fun calculateScale(distance: Float): Float {
+        if (distance < 0) {
 
-            if (distance < 0) {
+            return v.scaleY - (distance - previousDistance) * mScale
 
-                return v.scaleY - (distance - previousDistance) * mScale
+        } else {
 
-            } else {
-
-                return v.scaleY + (distance - previousDistance) * mScale
-
-            }
-
+            return v.scaleY + (distance - previousDistance) * mScale
 
         }
 
-        v.scaleY = calculateScale(distance)
+
+    }
+
+    private fun scaleView(v: View, distance: Float, mScale: Float) {
+
+        v.scaleY = calculateScale(v, distance, mScale)
 
     }
 
@@ -188,10 +210,6 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
             return 0f
 
         }
-    }
-
-    fun convertPixelsToDp(context: Context, px: Float): Float {
-        return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 
 }
