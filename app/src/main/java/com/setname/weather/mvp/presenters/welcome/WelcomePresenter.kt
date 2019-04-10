@@ -2,15 +2,12 @@ package com.setname.weather.mvp.presenters.welcome
 
 import android.support.v4.app.FragmentManager
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
-import com.setname.weather.mvp.interfaces.welcome.adapters.list_main.ListWelcome
 import com.setname.weather.mvp.interfaces.welcome.adapters.up_panel.view_pager.InteractionWithWelcomePresenterFromViewPager
-import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.models.adapter.welcome.lists.day.ModelDayList
 import com.setname.weather.mvp.models.adapter.welcome.lists.hour.ModelThreeHoursList
 import com.setname.weather.mvp.models.database.weather.ModelWeatherForDB
-import com.setname.weather.mvp.models.database.weather.smart_request.ModelUpPanel
 import com.setname.weather.mvp.models.retrofit.ModelResponse
-import com.setname.weather.mvp.presenters.welcome.with_db.InteractionsWithDatabase
+import com.setname.weather.mvp.presenters.welcome.withdb.InteractionsWithDatabase
 import com.setname.weather.mvp.retrofit.WeatherAPIService
 import com.setname.weather.mvp.utils.converters.ConverterResponseToDBType
 import com.setname.weather.mvp.utils.poor.AppContext

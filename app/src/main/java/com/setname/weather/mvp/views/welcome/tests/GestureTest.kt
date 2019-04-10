@@ -1,4 +1,4 @@
-package com.setname.weather.mvp.views.welcome
+package com.setname.weather.mvp.views.welcome.tests
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -26,7 +26,6 @@ class GestureTest : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         viewGestureTest = inflater.inflate(R.layout.fragment_test_gesture, container, false)
-
         pinchToCloseCurrentCity = PinchToCloseCurrentCity(ViewConfiguration.get(context))
 
         return viewGestureTest

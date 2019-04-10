@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.setname.weather.R
 import com.setname.weather.mvp.adapters.welcome.day.DayAdapter
 import com.setname.weather.mvp.adapters.welcome.hour.ThreeHoursAdapter
-import com.setname.weather.mvp.adapters.welcome.up_panel.UpPanelViewPagerAdapter
+import com.setname.weather.mvp.adapters.welcome.uppanel.UpPanelViewPagerAdapter
 import com.setname.weather.mvp.interfaces.welcome.adapters.list_main.ListWelcome
 import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
 import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours

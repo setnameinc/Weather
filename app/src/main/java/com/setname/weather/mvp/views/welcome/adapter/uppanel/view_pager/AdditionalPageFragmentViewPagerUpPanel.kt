@@ -1,4 +1,4 @@
-package com.setname.weather.mvp.views.welcome.adapter.up_panel.view_pager
+package com.setname.weather.mvp.views.welcome.adapter.uppanel.view_pager
 
 import android.annotation.SuppressLint
 import android.os.Bundle

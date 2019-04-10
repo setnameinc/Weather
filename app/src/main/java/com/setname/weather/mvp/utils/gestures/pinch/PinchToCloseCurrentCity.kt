@@ -7,12 +7,12 @@ import android.view.ViewConfiguration
 
 class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
 
-    private enum class Finger(val number: Int){
+    private enum class Finger(val number: Int) {
         PRIMARY(0),
         SECOND(1);
     }
 
-    private val SCREEN_HEIGTH = 1920f;
+    private val SCREEN_HEIGHT = 1920f;
 
     /**
      * Number of fingers at screen at the same time
@@ -41,7 +41,7 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
     /**
      * The finish y coordinate position after folding
      */
-    private val END_Y = 400f
+    private val END_Y = 600f
 
     /**
      * The finish view size in PX after folding
@@ -51,7 +51,7 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
     /**
      * Like END_SIZE but in scale format
      */
-    private val END_SCALE: Float = END_SIZE / SCREEN_HEIGTH
+    private val END_SCALE: Float = END_SIZE / SCREEN_HEIGHT
 
     /**
      * Min distance between fingers
@@ -90,6 +90,12 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
      */
     private var moveY = 0f
 
+    /**
+     * Status bar height
+     *
+     */
+    private val STATUS_BAR_HEIGHT = 60f
+
     init {
         viewScaledTouchSlop = viewConfig.scaledTouchSlop
     }
@@ -111,13 +117,13 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
 
                     if (primaryToSecondStartTouchDistance > 0) {
 
-                        scaleY = -(SCREEN_HEIGTH - END_SIZE) / (SCREEN_HEIGTH * INTERACTION_ZONE_FOR_PINCH)
-                        moveY = -(SCREEN_HEIGTH / 2 - UP_ZONE - END_Y) / INTERACTION_ZONE_FOR_PINCH
+                        scaleY = -(SCREEN_HEIGHT - END_SIZE) / (SCREEN_HEIGHT * INTERACTION_ZONE_FOR_PINCH)
+                        moveY = -(SCREEN_HEIGHT / 2 - UP_ZONE - END_Y) / INTERACTION_ZONE_FOR_PINCH
 
                     } else {
 
-                        scaleY = (SCREEN_HEIGTH - END_SIZE) / (SCREEN_HEIGTH * INTERACTION_ZONE_FOR_PINCH)
-                        moveY = (SCREEN_HEIGTH / 2 - UP_ZONE - END_Y) / INTERACTION_ZONE_FOR_PINCH
+                        scaleY = (SCREEN_HEIGHT - END_SIZE) / (SCREEN_HEIGHT * INTERACTION_ZONE_FOR_PINCH)
+                        moveY = (SCREEN_HEIGHT / 2 - UP_ZONE - END_Y) / INTERACTION_ZONE_FOR_PINCH
 
                     }
 
@@ -136,7 +142,9 @@ class PinchToCloseCurrentCity(val viewConfig: ViewConfiguration) {
                     } else {
                         v.animate()
                             .scaleY(END_SCALE)
-                            .translationY(-465f)//TODO(calculating)
+/*
+                            .translationY(-(SCREEN_HEIGHT - END_SIZE - END_Y + STATUS_BAR_HEIGHT) / 3)
+*/
                             .start()
                     }
                 }

@@ -1,4 +1,4 @@
-package com.setname.weather.mvp.presenters.welcome.with_db
+package com.setname.weather.mvp.presenters.welcome.withdb
 
 import android.content.Context
 import com.setname.weather.mvp.database.app.WeatherDatabase
