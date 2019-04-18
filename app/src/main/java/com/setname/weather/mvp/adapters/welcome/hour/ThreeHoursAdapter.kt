@@ -13,11 +13,8 @@ import com.setname.weather.R
 import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.adapters.Selector
-import com.setname.weather.mvp.utils.expand.listen
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_per_three_hours_model.view.*
-import kotlin.math.log
-
 
 class ThreeHoursAdapter(
     private val list: ArrayList<ModelThreeHours>,
@@ -25,21 +22,35 @@ class ThreeHoursAdapter(
 ) :
     RecyclerView.Adapter<ThreeHoursAdapter.ViewHolder>() {
 
-    private lateinit var viewHolder: ViewHolder
+    class StateOfListeners(){
 
-    private var oldPos = -1
+        var prevPos = -2
+
+    }
+
+    private val states = StateOfListeners()
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
 
-        viewHolder = ViewHolder(
+        val viewHolder = ViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.adapter_weather_per_three_hours_model,
                 parent,
                 false
-            )
+            ), clickListener,
+            states
         )
 
-        viewHolder.listen { pos, type ->
+        return viewHolder
+    }
+
+    override fun getItemCount(): Int = list.size
+
+    override fun onBindViewHolder(viewHolder: ViewHolder, p1: Int) {
+
+        viewHolder.setModel(list[p1])
+
+        /*viewHolder.listen { pos, type ->
             run {
 
                 clickListener.setUpPanel(
@@ -47,43 +58,50 @@ class ThreeHoursAdapter(
                     id_dt = list[pos].id_dt
                 )
 
-                if (pos != oldPos) {
+            }
+        }*/
 
-                    /*if (oldPos != -1) {
+    }
 
-                        viewHolder.removeSelector()
-                        clickListener.updateAdapter(oldPos)
+    class ViewHolder(val view: View, val clickListener: AdapterClickListener, val states:StateOfListeners) : RecyclerView.ViewHolder(view),
+        View.OnClickListener {
 
-                    }*/
+        init {
+            view.setOnClickListener(this)
+        }
 
-                    viewHolder.drawSelector()
-                    clickListener.updateAdapter(pos)
+        override fun onClick(v: View?) {
 
-                    oldPos = pos
+            val curPos = adapterPosition
+            val oldPos = states.prevPos
+
+            if (curPos != oldPos) {
+                
+                if (oldPos >= 0) {
+
+                    removeSelector()
+                    clickListener.updateAdapter(curPos)
 
                 }
 
+                drawSelector()
+                clickListener.updateAdapter(oldPos)
+
+                Log.i("ThreeHA", "cur = ${curPos}, old = ${states.prevPos}")
+
+                states.prevPos = curPos
             }
+
         }
 
-        return viewHolder
-    }
-
-    override fun getItemCount(): Int = list.size
-
-    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-
-        p0.setModel(list[p1])
-
-    }
-
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-
-        private lateinit var viewSelector: Selector
+        private var viewSelector: Selector? = null
 
         fun removeSelector() {
-            view.apply {
-                adapter_weather_per_three_hours_model_const_layout.removeView(viewSelector)
+            Log.i("ThreeHA", "Removed")
+            if (viewSelector != null ) {
+                view.apply {
+                    adapter_weather_per_three_hours_model_const_layout.removeView(viewSelector)
+                }
             }
         }
 
@@ -91,7 +109,7 @@ class ThreeHoursAdapter(
             viewSelector = Selector(AppContext.applicationContext())
             val drawViewLayoutParams =
                 ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            viewSelector.layoutParams = drawViewLayoutParams
+            viewSelector?.layoutParams = drawViewLayoutParams
             view.apply {
                 adapter_weather_per_three_hours_model_const_layout.addView(viewSelector)
             }
