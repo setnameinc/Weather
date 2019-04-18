@@ -83,6 +83,12 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         }
 
+        private fun drawSelector(){
+
+
+
+        }
+
     }
 
 }

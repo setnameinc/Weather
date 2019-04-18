@@ -2,6 +2,7 @@ package com.setname.weather.mvp.adapters.welcome
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,12 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
     AdapterClickListener {
 
     private lateinit var viewHolderUpPanel: ViewHolderWeatherUpPanel
+
     private lateinit var viewHolderWeatherPerThreeHours: ViewHolderWeatherPerThreeHours
+
+    override fun updateAdapter(pos: Int) {
+        viewHolderWeatherPerThreeHours.updateAdapter(pos)
+    }
 
     override fun setThreeHoursPanel(id_city: Long, id_dt: Long) {
 
@@ -163,6 +169,12 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
 
         }
 
+        fun updateAdapter(pos:Int){
+
+            adapter.notifyItemChanged(pos)
+
+        }
+
     }
 
     private class ViewHolderWeatherPerDay(private val mView: View) : ViewHolder(mView) {
@@ -170,7 +182,6 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
         override fun bindType(listWelcome: ListWelcome, adapterClickListener: AdapterClickListener) {
 
             setRv(listWelcome, adapterClickListener)
-
 
         }
 
