@@ -1,5 +1,6 @@
 package com.setname.weather.mvp.adapters.welcome.hour
 
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.util.Log
@@ -26,13 +27,15 @@ class ThreeHoursAdapter(
 
         var prevPos = -2
 
+        var listOfConstLayout = mutableListOf<ConstraintLayout>()
+
     }
 
     private val states = StateOfListeners()
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
 
-        val viewHolder = ViewHolder(
+        return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.adapter_weather_per_three_hours_model,
                 parent,
@@ -41,14 +44,13 @@ class ThreeHoursAdapter(
             states
         )
 
-        return viewHolder
     }
 
     override fun getItemCount(): Int = list.size
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, p1: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, pos: Int) {
 
-        viewHolder.setModel(list[p1])
+        viewHolder.setModel(list[pos])
 
         /*viewHolder.listen { pos, type ->
             run {
@@ -76,7 +78,7 @@ class ThreeHoursAdapter(
             val oldPos = states.prevPos
 
             if (curPos != oldPos) {
-                
+
                 if (oldPos >= 0) {
 
                     removeSelector()
@@ -97,10 +99,10 @@ class ThreeHoursAdapter(
         private var viewSelector: Selector? = null
 
         fun removeSelector() {
-            Log.i("ThreeHA", "Removed")
             if (viewSelector != null ) {
                 view.apply {
                     adapter_weather_per_three_hours_model_const_layout.removeView(viewSelector)
+                    Log.i("ThreeHA", "removed at ${states.prevPos}")
                 }
             }
         }
