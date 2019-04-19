@@ -8,18 +8,16 @@ import android.view.View
 class Selector(context: Context) : View(context) {
 
     var paint: Paint = Paint()
-    var length: Float = 0f
+    var length: Float = (height.toFloat() + width.toFloat())
 
     init {
 
         paint.color = Color.BLACK
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 5f
-
-        length = (height+width)*2f
+        paint.strokeWidth = 2f
 
         val animator = ObjectAnimator.ofFloat(this, "phase", 1f, 0f)
-        animator.duration = 10000
+        animator.duration = 5000
         animator.start()
     }
 
@@ -35,15 +33,31 @@ class Selector(context: Context) : View(context) {
         )
     }
 
+    private val path = Path()
+
     override fun onDraw(canvas: Canvas) {
 
-        /*val path = Path()
+        path.addRoundRect(
+            paint.strokeWidth / 2,
+            paint.strokeWidth / 2,
+            width.toFloat() - paint.strokeWidth,
+            height.toFloat() - paint.strokeWidth,
+            10f,
+            10f,
+            Path.Direction.CCW
+        )
 
-        path.addRoundRect(0f, 0f, width.toFloat(), height.toFloat(), 10f, 10f, Path.Direction.CCW)
+        canvas.drawPath(path, paint)
 
-        canvas.drawPath(path, paint)*/
-
-        canvas.drawRoundRect(0f, 0f, width.toFloat(), height.toFloat(), 10f, 10f, paint)
+        /*canvas.drawRoundRect(
+            paint.strokeWidth / 2,
+            paint.strokeWidth / 2,
+            width.toFloat() - paint.strokeWidth,
+            height.toFloat() - paint.strokeWidth,
+            10f,
+            10f,
+            paint
+        )*/
 
     }
 

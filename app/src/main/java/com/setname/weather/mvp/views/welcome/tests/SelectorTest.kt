@@ -18,6 +18,8 @@ import java.util.logging.Logger
 import android.animation.ObjectAnimator
 import android.graphics.DashPathEffect
 import android.graphics.PathEffect
+import com.setname.weather.mvp.utils.adapters.Selector
+import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.selector_test.*
 
 
@@ -40,7 +42,7 @@ class SelectorTest : Fragment() {
 
         CoroutineScope(Dispatchers.Main).launch {
 
-            var drawViewDraw:DrawView? = null
+            var drawViewDraw:Selector? = null
             val constraintLayout = selector_test_constraint_layout
 
             withContext(Dispatchers.Main) {
@@ -48,7 +50,7 @@ class SelectorTest : Fragment() {
 
                     if (clickerCount % 2 == 0) {
 
-                        drawViewDraw = DrawView(context!!)
+                        drawViewDraw = Selector(AppContext.applicationContext())
                         val drawViewLayoutParams =
                             ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
                         drawViewDraw?.layoutParams = drawViewLayoutParams
@@ -91,7 +93,7 @@ class SelectorTest : Fragment() {
             length = 2600f
 
             val animator = ObjectAnimator.ofFloat(this, "phase", 1f, 0f)
-            animator.duration = 5000
+            animator.duration = 3000
             animator.start()
         }
 
@@ -107,9 +109,9 @@ class SelectorTest : Fragment() {
             )
         }
 
-        override fun onDraw(canvas: Canvas) {
+        private val path = Path()
 
-            val path = Path()
+        override fun onDraw(canvas: Canvas) {
 
             path.addRoundRect(0f, 0f, 500f, 800f, 10f, 10f, Path.Direction.CCW)
 

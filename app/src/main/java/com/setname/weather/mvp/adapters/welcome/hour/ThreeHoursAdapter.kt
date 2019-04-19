@@ -1,6 +1,5 @@
 package com.setname.weather.mvp.adapters.welcome.hour
 
-import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.util.Log
@@ -23,15 +22,7 @@ class ThreeHoursAdapter(
 ) :
     RecyclerView.Adapter<ThreeHoursAdapter.ViewHolder>() {
 
-    class StateOfListeners(){
-
-        var prevPos = -2
-
-        var listOfConstLayout = mutableListOf<ConstraintLayout>()
-
-    }
-
-    private val states = StateOfListeners()
+    private var currentPos = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
 
@@ -40,8 +31,7 @@ class ThreeHoursAdapter(
                 R.layout.adapter_weather_per_three_hours_model,
                 parent,
                 false
-            ), clickListener,
-            states
+            ), clickListener
         )
 
     }
@@ -52,69 +42,49 @@ class ThreeHoursAdapter(
 
         viewHolder.setModel(list[pos])
 
-        /*viewHolder.listen { pos, type ->
-            run {
+        if(pos == currentPos){
 
-                clickListener.setUpPanel(
-                    id_city = list[pos].id_city,
-                    id_dt = list[pos].id_dt
-                )
+            drawSelector(viewHolder)
 
-            }
-        }*/
+            clickListener.setUpPanel(
+                id_city = list[pos].id_city,
+                id_dt = list[pos].id_dt
+            )
+
+        }
 
     }
 
-    class ViewHolder(val view: View, val clickListener: AdapterClickListener, val states:StateOfListeners) : RecyclerView.ViewHolder(view),
+    private var viewSelector: Selector = Selector(AppContext.applicationContext());
+
+    fun drawSelector(viewHolder: ViewHolder) {
+
+        viewHolder.view.apply {
+
+            if(viewSelector.parent !=null){
+                (viewSelector.parent as ViewGroup).removeView(viewSelector)
+            }
+
+            adapter_weather_per_three_hours_model_const_layout.addView(viewSelector)
+
+        }
+    }
+
+    inner class ViewHolder(val view: View, val clickListener: AdapterClickListener) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
 
         init {
+
             view.setOnClickListener(this)
+
         }
 
         override fun onClick(v: View?) {
 
-            val curPos = adapterPosition
-            val oldPos = states.prevPos
+            currentPos = adapterPosition
 
-            if (curPos != oldPos) {
+            notifyItemChanged(adapterPosition)
 
-                if (oldPos >= 0) {
-
-                    removeSelector()
-                    clickListener.updateAdapter(curPos)
-
-                }
-
-                drawSelector()
-                clickListener.updateAdapter(oldPos)
-
-                Log.i("ThreeHA", "cur = ${curPos}, old = ${states.prevPos}")
-
-                states.prevPos = curPos
-            }
-
-        }
-
-        private var viewSelector: Selector? = null
-
-        fun removeSelector() {
-            if (viewSelector != null ) {
-                view.apply {
-                    adapter_weather_per_three_hours_model_const_layout.removeView(viewSelector)
-                    Log.i("ThreeHA", "removed at ${states.prevPos}")
-                }
-            }
-        }
-
-        fun drawSelector() {
-            viewSelector = Selector(AppContext.applicationContext())
-            val drawViewLayoutParams =
-                ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-            viewSelector?.layoutParams = drawViewLayoutParams
-            view.apply {
-                adapter_weather_per_three_hours_model_const_layout.addView(viewSelector)
-            }
         }
 
         fun setModel(modelHourForModelDay: ModelThreeHours) {

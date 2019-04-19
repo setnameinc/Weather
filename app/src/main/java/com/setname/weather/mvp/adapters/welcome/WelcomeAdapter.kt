@@ -30,10 +30,6 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
 
     private lateinit var viewHolderWeatherPerThreeHours: ViewHolderWeatherPerThreeHours
 
-    override fun updateAdapter(pos: Int) {
-        viewHolderWeatherPerThreeHours.updateAdapter(pos)
-    }
-
     override fun setThreeHoursPanel(id_city: Long, id_dt: Long) {
 
         viewHolderWeatherPerThreeHours.addToList(
@@ -166,12 +162,6 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
             listForAdapter.addAll(modelThreeHoursList.list)
 
             adapter.notifyDataSetChanged()
-
-        }
-
-        fun updateAdapter(pos:Int){
-
-            adapter.notifyItemChanged(pos)
 
         }
 
