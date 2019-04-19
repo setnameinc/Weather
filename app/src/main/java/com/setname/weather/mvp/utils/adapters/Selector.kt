@@ -14,14 +14,14 @@ class Selector(context: Context) : View(context) {
 
         paint.color = Color.BLACK
         paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 2f
+        paint.strokeWidth = 1f
 
-        val animator = ObjectAnimator.ofFloat(this, "phase", 1f, 0f)
+        /*val animator = ObjectAnimator.ofFloat(this, "phase", 1f, 0f)
         animator.duration = 5000
-        animator.start()
+        animator.start()*/
     }
 
-    fun setPhase(phase: Float) {
+    /*fun setPhase(phase: Float) {
         paint.pathEffect = createPathEffect(length, phase, 0.0f)
         invalidate()//will call onDraw
     }
@@ -33,11 +33,11 @@ class Selector(context: Context) : View(context) {
         )
     }
 
-    private val path = Path()
+    private val path = Path()*/
 
     override fun onDraw(canvas: Canvas) {
 
-        path.addRoundRect(
+        /*path.addRoundRect(
             paint.strokeWidth / 2,
             paint.strokeWidth / 2,
             width.toFloat() - paint.strokeWidth,
@@ -47,9 +47,9 @@ class Selector(context: Context) : View(context) {
             Path.Direction.CCW
         )
 
-        canvas.drawPath(path, paint)
+        canvas.drawPath(path, paint)*/
 
-        /*canvas.drawRoundRect(
+        canvas.drawRoundRect(
             paint.strokeWidth / 2,
             paint.strokeWidth / 2,
             width.toFloat() - paint.strokeWidth,
@@ -57,7 +57,7 @@ class Selector(context: Context) : View(context) {
             10f,
             10f,
             paint
-        )*/
+        )
 
     }
 

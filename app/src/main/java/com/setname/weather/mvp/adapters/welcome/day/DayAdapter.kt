@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide
 import com.setname.weather.R
 import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
+import com.setname.weather.mvp.utils.adapters.Selector
 import com.setname.weather.mvp.utils.expand.listen
+import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_per_day_model.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,6 +22,8 @@ import java.util.logging.Logger
 class DayAdapter(private val list: List<ModelDay>, private val clickListener: AdapterClickListener) :
     RecyclerView.Adapter<DayAdapter.ViewHolder>() {
 
+    private var currentPos = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -27,29 +31,63 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
                 parent,
                 false
             )
-        ).listen { pos, type ->
-            run {
-                clickListener.setThreeHoursPanel(
-                    id_city = list[pos].id_city,
-                    id_dt = list[pos].id_dt - 64800L
-                    /*(-64800L) 3am - (15 hours(from middle forecast to start day)
-                     + 3 hours(UTC or openweatherforecast feature)) = 0pm*/
-                )
-                clickListener.setUpPanel(
-                    id_city = list[pos].id_city,
-                    id_dt = list[pos].id_dt
-                )
-            }
-        }
+        )
     }
 
     override fun getItemCount(): Int = list.size
 
-    override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        p0.setModel(list[p1])
+    override fun onBindViewHolder(viewHolder: ViewHolder, pos: Int) {
+        viewHolder.setModel(list[pos])
+
+        if(pos == currentPos){
+
+            drawSelector(viewHolder)
+
+            clickListener.setThreeHoursPanel(
+                id_city = list[pos].id_city,
+                id_dt = list[pos].id_dt - 64800L
+                /*(-64800L) 3am - (15 hours(from middle forecast to start day)
+                 + 3 hours(UTC or openweatherforecast feature)) = 0pm*/
+            )
+            clickListener.setUpPanel(
+                id_city = list[pos].id_city,
+                id_dt = list[pos].id_dt
+            )
+
+        }
+
     }
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    private var viewSelector: Selector = Selector(AppContext.applicationContext())
+
+    private fun drawSelector(viewHolder: ViewHolder) {
+
+        viewHolder.view.apply {
+
+            if(viewSelector.parent !=null){
+                (viewSelector.parent as ViewGroup).removeView(viewSelector)
+            }
+
+            adapter_weather_per_day_model_const_layout.addView(viewSelector)
+
+        }
+    }
+
+    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+
+        init {
+
+            view.setOnClickListener(this)
+
+        }
+
+        override fun onClick(v: View?) {
+
+            currentPos = adapterPosition
+
+            notifyItemChanged(adapterPosition)
+
+        }
 
         fun setModel(modelHourForModelDay: ModelDay) {
 

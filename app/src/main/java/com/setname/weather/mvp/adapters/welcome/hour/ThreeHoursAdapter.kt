@@ -31,7 +31,7 @@ class ThreeHoursAdapter(
                 R.layout.adapter_weather_per_three_hours_model,
                 parent,
                 false
-            ), clickListener
+            )
         )
 
     }
@@ -57,7 +57,7 @@ class ThreeHoursAdapter(
 
     private var viewSelector: Selector = Selector(AppContext.applicationContext());
 
-    fun drawSelector(viewHolder: ViewHolder) {
+    private fun drawSelector(viewHolder: ViewHolder) {
 
         viewHolder.view.apply {
 
@@ -70,7 +70,7 @@ class ThreeHoursAdapter(
         }
     }
 
-    inner class ViewHolder(val view: View, val clickListener: AdapterClickListener) : RecyclerView.ViewHolder(view),
+    inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
 
         init {
