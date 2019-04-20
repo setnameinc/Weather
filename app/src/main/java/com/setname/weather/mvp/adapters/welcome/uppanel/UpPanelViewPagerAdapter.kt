@@ -5,9 +5,9 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.setname.weather.mvp.models.adapter.welcome.up_panel.view_pager.AdditionalModelUpPanel
 import com.setname.weather.mvp.models.adapter.welcome.up_panel.view_pager.MainModelUpPanel
+import com.setname.weather.mvp.models.database.weather.smart_request.ModelUpPanel
 import com.setname.weather.mvp.views.welcome.adapter.uppanel.view_pager.AdditionalPageFragmentViewPagerUpPanel
 import com.setname.weather.mvp.views.welcome.adapter.uppanel.view_pager.MainPageFragmentViewPagerUpPanel
-import com.setname.weather.mvp.models.database.weather.smart_request.ModelUpPanel as ModelUpPanel
 import java.util.logging.Logger
 
 class UpPanelViewPagerAdapter constructor(
@@ -43,11 +43,11 @@ class UpPanelViewPagerAdapter constructor(
 
     override fun getItemPosition(`object`: Any): Int {
 
-        if (`object` is MainPageFragmentViewPagerUpPanel){
+        if (`object` is MainPageFragmentViewPagerUpPanel) {
 
             `object`.update(MainModelUpPanel(modelUpPanel))
 
-        } else if (`object` is AdditionalPageFragmentViewPagerUpPanel){
+        } else if (`object` is AdditionalPageFragmentViewPagerUpPanel) {
 
             `object`.update(AdditionalModelUpPanel(modelUpPanel))
 
@@ -56,7 +56,7 @@ class UpPanelViewPagerAdapter constructor(
         return super.getItemPosition(`object`)
     }
 
-    fun update(modelUpPanel:ModelUpPanel){
+    fun update(modelUpPanel: ModelUpPanel) {
         this.modelUpPanel = modelUpPanel
         notifyDataSetChanged()
     }

@@ -2,7 +2,6 @@ package com.setname.weather.mvp.adapters.welcome
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,8 @@ import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_up_panel.view.*
 import java.util.logging.Logger
+import android.view.animation.AnimationUtils
+
 
 class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welcomePresenter: WelcomePresenter) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(),
@@ -123,8 +124,6 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
                     adapter_image_main_city_name.text = welcomePresenter.getPlace(modelWeatherUpPanel.id_city).name_city
                 }
 
-                Logger.getLogger("Welcome").info("${modelWeatherUpPanel.temp}")
-
             }
 
         }
@@ -136,6 +135,8 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
         private var listForAdapter = arrayListOf<ModelThreeHours>()
         private lateinit var adapter: ThreeHoursAdapter
 
+        private lateinit var rv:RecyclerView
+
         override fun bindType(listWelcome: ListWelcome, adapterClickListener: AdapterClickListener) {
 
             setRv((listWelcome as ModelThreeHoursList), adapterClickListener)
@@ -144,7 +145,7 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
 
         private fun setRv(modelThreeHoursList: ModelThreeHoursList, adapterClickListener: AdapterClickListener) {
 
-            val rv = mView.findViewById<RecyclerView>(R.id.adapter_weather_for_hours_rv)
+            rv = mView.findViewById<RecyclerView>(R.id.adapter_weather_for_hours_rv)
             adapter = ThreeHoursAdapter(listForAdapter, adapterClickListener)
 
             rv.layoutManager =
@@ -153,13 +154,23 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
 
             addToList(modelThreeHoursList)
 
+        }
 
+        private fun runLayoutAnimation(recyclerView: RecyclerView) {
+            val context = recyclerView.context
+            val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_start_to_end)
+
+            recyclerView.layoutAnimation = controller
+            recyclerView.adapter!!.notifyDataSetChanged()
+            recyclerView.scheduleLayoutAnimation()
         }
 
         fun addToList(modelThreeHoursList: ModelThreeHoursList) {
 
             listForAdapter.clear()
             listForAdapter.addAll(modelThreeHoursList.list)
+
+            runLayoutAnimation(rv)
 
             adapter.notifyDataSetChanged()
 
@@ -185,8 +196,10 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
             rv.adapter = adapter
 
             list.addAll((listWelcome as ModelDayList).list)
+
             adapter.notifyDataSetChanged()
         }
+
 
     }
 

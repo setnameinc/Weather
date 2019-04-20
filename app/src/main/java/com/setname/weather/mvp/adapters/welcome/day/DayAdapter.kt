@@ -37,7 +37,10 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(viewHolder: ViewHolder, pos: Int) {
+
         viewHolder.setModel(list[pos])
+
+
 
         if(pos == currentPos){
 
@@ -83,9 +86,13 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         override fun onClick(v: View?) {
 
-            currentPos = adapterPosition
+            if (currentPos!=adapterPosition) {
 
-            notifyItemChanged(adapterPosition)
+                currentPos = adapterPosition
+
+                notifyItemChanged(adapterPosition)
+
+            }
 
         }
 

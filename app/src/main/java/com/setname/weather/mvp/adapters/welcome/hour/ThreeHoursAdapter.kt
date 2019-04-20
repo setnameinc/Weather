@@ -15,6 +15,10 @@ import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.adapters.Selector
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_per_three_hours_model.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ThreeHoursAdapter(
     private val list: ArrayList<ModelThreeHours>,
@@ -44,12 +48,31 @@ class ThreeHoursAdapter(
 
         if(pos == currentPos){
 
-            drawSelector(viewHolder)
+            /*CoroutineScope(Dispatchers.Main).launch {
+
+                withContext(Dispatchers.Main){
+
+                    clickListener.setUpPanel(
+                        id_city = list[pos].id_city,
+                        id_dt = list[pos].id_dt
+                    )
+
+                }
+
+                withContext(Dispatchers.Main){
+
+                    drawSelector(viewHolder)
+
+                }
+
+            }*/
 
             clickListener.setUpPanel(
                 id_city = list[pos].id_city,
                 id_dt = list[pos].id_dt
             )
+
+            drawSelector(viewHolder)
 
         }
 
@@ -81,9 +104,13 @@ class ThreeHoursAdapter(
 
         override fun onClick(v: View?) {
 
-            currentPos = adapterPosition
+            if (currentPos!=adapterPosition) {
 
-            notifyItemChanged(adapterPosition)
+                currentPos = adapterPosition
+
+                notifyItemChanged(adapterPosition)
+
+            }
 
         }
 

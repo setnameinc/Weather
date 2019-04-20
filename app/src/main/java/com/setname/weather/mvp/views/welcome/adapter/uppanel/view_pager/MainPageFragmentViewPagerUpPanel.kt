@@ -6,9 +6,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.setname.weather.R
 import com.setname.weather.mvp.interfaces.welcome.adapters.up_panel.view_pager.UpdateViewPager
 import com.setname.weather.mvp.models.adapter.welcome.up_panel.view_pager.MainModelUpPanel
+import kotlinx.android.synthetic.main.adapter_weather_up_panel_view_pager_main_page.*
 import kotlinx.android.synthetic.main.adapter_weather_up_panel_view_pager_main_page.view.*
 import java.util.logging.Logger
 
@@ -34,9 +36,11 @@ class MainPageFragmentViewPagerUpPanel : Fragment(), UpdateViewPager {
 
     private fun setView(modelUpPanel: MainModelUpPanel) {
 
-        log.info("${modelUpPanel.temp}")
+        val anim = AnimationUtils.loadAnimation(context, R.anim.item_animation_appearance)
 
         viewLocal.apply {
+
+            startAnimation(anim)
 
             adapter_weather_up_panel_view_pager_main_page_desc.text =
                 modelUpPanel.desc.replaceFirst(modelUpPanel.desc[0], modelUpPanel.desc[0].toUpperCase())

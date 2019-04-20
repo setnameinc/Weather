@@ -12,7 +12,7 @@ class Selector(context: Context) : View(context) {
 
     init {
 
-        paint.color = Color.BLACK
+        paint.color = Color.parseColor("#BDBDBD")
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 1f
 
@@ -50,12 +50,12 @@ class Selector(context: Context) : View(context) {
         canvas.drawPath(path, paint)*/
 
         canvas.drawRoundRect(
-            paint.strokeWidth / 2,
-            paint.strokeWidth / 2,
-            width.toFloat() - paint.strokeWidth,
+            paint.strokeWidth+5,
+            paint.strokeWidth,
+            width.toFloat() - paint.strokeWidth-5,
             height.toFloat() - paint.strokeWidth,
-            10f,
-            10f,
+            50f,
+            50f,
             paint
         )
 
