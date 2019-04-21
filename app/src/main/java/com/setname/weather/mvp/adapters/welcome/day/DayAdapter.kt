@@ -1,7 +1,8 @@
 package com.setname.weather.mvp.adapters.welcome.day
 
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
-import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +13,10 @@ import com.setname.weather.R
 import com.setname.weather.mvp.models.adapter.welcome.day.ModelDay
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.adapters.Selector
-import com.setname.weather.mvp.utils.expand.listen
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_per_day_model.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.logging.Logger
 
 class DayAdapter(private val list: List<ModelDay>, private val clickListener: AdapterClickListener) :
     RecyclerView.Adapter<DayAdapter.ViewHolder>() {
@@ -42,7 +41,7 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
 
 
-        if(pos == currentPos){
+        if (pos == currentPos) {
 
             drawSelector(viewHolder)
 
@@ -67,7 +66,7 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         viewHolder.view.apply {
 
-            if(viewSelector.parent !=null){
+            if (viewSelector.parent != null) {
                 (viewSelector.parent as ViewGroup).removeView(viewSelector)
             }
 
@@ -86,7 +85,7 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         override fun onClick(v: View?) {
 
-            if (currentPos!=adapterPosition) {
+            if (currentPos != adapterPosition) {
 
                 currentPos = adapterPosition
 
@@ -110,7 +109,15 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         private fun ImageView.setImage(image_url: String) {
 
-            Glide.with(itemView.context).load("http://openweathermap.org/img/w/$image_url.png").into(this)
+            if (image_url == "01d") {
+
+                Glide.with(itemView.context).load(ContextCompat.getDrawable(context, R.drawable.sun)).into(this)
+
+            } else {
+
+                Glide.with(itemView.context).load("http://openweathermap.org/img/w/$image_url.png").into(this)
+
+            }
 
         }
 
@@ -128,8 +135,7 @@ class DayAdapter(private val list: List<ModelDay>, private val clickListener: Ad
 
         }
 
-        private fun drawSelector(){
-
+        private fun drawSelector() {
 
 
         }

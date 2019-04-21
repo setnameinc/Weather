@@ -1,5 +1,6 @@
 package com.setname.weather.mvp.adapters.welcome.hour
 
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
 import android.util.Log
@@ -15,10 +16,6 @@ import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.adapters.Selector
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_per_three_hours_model.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class ThreeHoursAdapter(
     private val list: ArrayList<ModelThreeHours>,
@@ -46,7 +43,7 @@ class ThreeHoursAdapter(
 
         viewHolder.setModel(list[pos])
 
-        if(pos == currentPos){
+        if (pos == currentPos) {
 
             /*CoroutineScope(Dispatchers.Main).launch {
 
@@ -84,7 +81,7 @@ class ThreeHoursAdapter(
 
         viewHolder.view.apply {
 
-            if(viewSelector.parent !=null){
+            if (viewSelector.parent != null) {
                 (viewSelector.parent as ViewGroup).removeView(viewSelector)
             }
 
@@ -104,7 +101,7 @@ class ThreeHoursAdapter(
 
         override fun onClick(v: View?) {
 
-            if (currentPos!=adapterPosition) {
+            if (currentPos != adapterPosition) {
 
                 currentPos = adapterPosition
 
@@ -128,7 +125,23 @@ class ThreeHoursAdapter(
 
         private fun ImageView.setImage(image_url: String) {
 
-            Glide.with(itemView.context).load("http://openweathermap.org/img/w/$image_url.png").into(this)
+            when (image_url) {
+
+                "01d" -> Glide.with(itemView.context).load(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.sun
+                    )
+                ).into(this)
+                "01n" -> Glide.with(itemView.context).load(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.moon_sun
+                    )
+                ).into(this)
+                else -> Glide.with(itemView.context).load("http://openweathermap.org/img/w/$image_url.png").into(this)
+
+            }
 
         }
 
