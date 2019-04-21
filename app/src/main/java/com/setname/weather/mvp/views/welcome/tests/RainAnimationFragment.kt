@@ -10,7 +10,6 @@ import android.graphics.Path
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +26,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
+/*
+
+This is a demo view
+
+ */
+
 class RainAnimationFragment : Fragment() {
 
     private lateinit var viewRainAnimationFragment: View
@@ -34,6 +39,8 @@ class RainAnimationFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         viewRainAnimationFragment = inflater.inflate(R.layout.rain_test, container, false)
+
+        viewRainAnimationFragment.alpha = 0.3f
 
         val rainAnimation = RainAnimation(container!!.context)
 

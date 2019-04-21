@@ -20,10 +20,10 @@ class MainActivity : AppCompatActivity() {
 
         setFullScreen()
 
-        /*supportFragmentManager.beginTransaction().replace(
+        supportFragmentManager.beginTransaction().replace(
             R.id.main_container,
             WelcomeFragment()
-        ).commit()*/
+        ).commit()
 
         /*supportFragmentManager.beginTransaction().replace(
             R.id.main_container,
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         ).commit()*/
 
         supportFragmentManager.beginTransaction().replace(
-            R.id.main_container,
+            R.id.background_container,
             RainAnimationFragment()
         ).commit()
 
