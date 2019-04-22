@@ -35,10 +35,10 @@ class MainActivity : AppCompatActivity() {
             SelectorTest()
         ).commit()*/
 
-        supportFragmentManager.beginTransaction().replace(
+        /*supportFragmentManager.beginTransaction().replace(
             R.id.background_container,
             RainAnimationFragment()
-        ).commit()
+        ).commit()*/
 
     }
 

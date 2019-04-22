@@ -9,21 +9,21 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.SeekBar
 import com.setname.weather.R
 import kotlinx.android.synthetic.main.rain_test.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 /*
@@ -36,11 +36,19 @@ class RainAnimationFragment : Fragment() {
 
     private lateinit var viewRainAnimationFragment: View
 
+    private lateinit var seekBar: SeekBar
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         viewRainAnimationFragment = inflater.inflate(R.layout.rain_test, container, false)
 
-        viewRainAnimationFragment.alpha = 0.3f
+        /*viewRainAnimationFragment.alpha = 0.3f*/
+
+        viewRainAnimationFragment.apply {
+
+            seekBar = rain_test_seek_bar
+
+        }
 
         val rainAnimation = RainAnimation(container!!.context)
 
@@ -60,85 +68,116 @@ class RainAnimationFragment : Fragment() {
 
         private val imageList: MutableList<ImageView> = mutableListOf()
 
+        private val dropListVertical: MutableList<Drop> = mutableListOf()
+        private val dropListHorizontal: MutableList<Drop> = mutableListOf()
+
         init {
 
-            /*this.layoutParams = LayoutParams(1080, 1920)
+            val LISTS_SIZE = 20
 
-            for (i in 0..poolSize) {
+            for (i in 0..LISTS_SIZE - 1) {
 
-                val imageView = generateDrop()
-
-                addView(imageView, 0)
-                imageList.add(imageView)
-
-
-            }
-
-            CoroutineScope(Dispatchers.Main).launch {
-
-                for (i in imageList) {
-
-                    startAnim(i)
-                    *//*delay(5000)*//*
-
-                }
-
-            }*/
-
-            CoroutineScope(Dispatchers.Main).launch {
-
-                for (i in 0..20) {
-
-                    addView(Drop(context))
-                    delay(Random.nextInt(500, 1000).toLong())
-
-                }
+                dropListVertical.add(Drop(context))
+                dropListVertical[i].redraw(-30.toDouble())
+                addView(dropListVertical[i])
+                /*delay(Random.nextInt(500, 1000).toLong())*/
 
             }
 
-        }
+            for (i in 0..LISTS_SIZE - 1) {
 
-        private fun generateDrop(): ImageView {
+                dropListHorizontal.add(Drop(context))
+                dropListHorizontal[i].visibility = View.INVISIBLE
+                dropListHorizontal[i].redraw(-30.toDouble())
+                addView(dropListHorizontal[i])
 
-            val image = ImageView(context)
-            image.background = ContextCompat.getDrawable(context, R.drawable.drop)
-            image.layoutParams = LayoutParams(100, 100)
+                /*delay(Random.nextInt(500, 1000).toLong())*/
 
-            return image
+            }
 
-        }
+            var countOfVertical: Int = 0
+            var lastPos: Int = 0
 
-        private fun startAnim(image: ImageView) {
+            seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
-            val transAnim =
-                TranslateAnimation(Random.nextInt(1000).toFloat(), Random.nextInt(1000).toFloat(), 0f, 1920f)
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-            transAnim.duration = 3000
-            transAnim.setAnimationListener(object : Animation.AnimationListener {
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
 
-                override fun onAnimationStart(animation: Animation) {}
+                    CoroutineScope(Dispatchers.Main).launch {
 
-                override fun onAnimationEnd(animation: Animation) {
+                        withContext(Dispatchers.Main) {
 
-                    removeView(image)
+                            countOfVertical = (seekBar!!.progress - 90) * LISTS_SIZE / 90
+
+                            Log.i("RainAF", "countOfVertical = ${countOfVertical}")
+                            Log.i("RainAF", "angle = ${seekBar!!.progress - 90}")
+
+                            if (countOfVertical > 0) {
+
+                                for (i in lastPos..lastPos + Math.abs(countOfVertical)) {
+
+                                    dropListVertical[i].visibility = View.GONE
+                                    dropListHorizontal[i].visibility = View.VISIBLE
+
+                                    if (lastPos + countOfVertical - 1 == i) {
+
+                                        lastPos = countOfVertical
+
+                                    }
+
+                                }
+
+                            } else {
+
+                                for (i in lastPos + Math.abs(countOfVertical)..lastPos) {
+
+                                    dropListVertical[i].visibility = View.VISIBLE
+                                    dropListHorizontal[i].visibility = View.GONE
+
+                                    if (lastPos + countOfVertical - 1 == i) {
+
+                                        lastPos = countOfVertical
+
+                                    }
+
+                                }
+
+                            }
+
+                            for (i in dropListVertical) {
+
+                                i.redraw((seekBar!!.progress - 90).toDouble())
+
+                                /*delay(Random.nextInt(500, 1000).toLong())*/
+
+                            }
+
+                            for (i in dropListHorizontal){
+
+                                i.redraw((seekBar!!.progress - 90).toDouble())
+
+                            }
+
+                        }
+
+                    }
 
                 }
 
-                override fun onAnimationRepeat(animation: Animation) {}
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {}
+
             })
 
-            transAnim.repeatCount = 3
-
-            image.startAnimation(transAnim)
-
         }
-
 
     }
 
-    class Drop(context: Context) : View(context) {
+    inner class Drop(context: Context) : View(context) {
 
-        val angle = -30.toDouble()
+        var angle = -30.toDouble()
+        var fromX = 0f
+        var toX = 0f
 
         val customHeight = 1920f
         val customWidth = 1080f
@@ -146,7 +185,7 @@ class RainAnimationFragment : Fragment() {
         var curX = 0f
 
         val paint = Paint()
-        val path = Path()
+        lateinit var path: Path
 
         init {
 
@@ -154,8 +193,11 @@ class RainAnimationFragment : Fragment() {
             paint.color = Color.BLACK
             paint.strokeWidth = 3f
 
-            val fromX = Random.nextInt(1350).toFloat()
-            val toX = fromX + customHeight * Math.tan(Math.toRadians(angle)).toFloat()
+        }
+
+        private fun setAnimation() {
+            fromX = Random.nextInt(1350).toFloat()
+            toX = fromX + customHeight * Math.tan(Math.toRadians(angle)).toFloat()
 
             val animation =
                 TranslateAnimation(fromX, toX, -1920f, 1920f)
@@ -168,10 +210,22 @@ class RainAnimationFragment : Fragment() {
 
             }
             this.startAnimation(animation)
+        }
+
+        fun redraw(curAngle: Double) {
+
+            angle = curAngle
+            path = Path()
+
+            drawSeparatedLine()
+            setAnimation()
+
+
+            invalidate()
 
         }
 
-        fun drawSeparatedLine() {
+        private fun drawSeparatedLine() {
 
             val dropLength = 20
 
@@ -196,7 +250,6 @@ class RainAnimationFragment : Fragment() {
 
         override fun onDraw(canvas: Canvas?) {
             super.onDraw(canvas)
-            drawSeparatedLine()
 
             canvas?.drawPath(path, paint)
 
