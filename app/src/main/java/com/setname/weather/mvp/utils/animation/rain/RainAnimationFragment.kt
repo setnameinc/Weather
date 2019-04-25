@@ -1,4 +1,4 @@
-package com.setname.weather.mvp.views.welcome.tests
+package com.setname.weather.mvp.utils.animation.rain
 
 import android.animation.ValueAnimator.INFINITE
 import android.animation.ValueAnimator.RESTART
@@ -13,11 +13,11 @@ import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
-import android.widget.SeekBar
 import com.setname.weather.R
-import kotlinx.android.synthetic.main.rain_test.view.*
+import kotlinx.android.synthetic.main.rain.view.*
 import kotlinx.coroutines.*
 import kotlin.random.Random
+
 
 /*
 
@@ -32,43 +32,20 @@ class RainAnimationFragment : Fragment() {
 
     private lateinit var viewRainAnimationFragment: View
 
-    private lateinit var seekBar: SeekBar
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        viewRainAnimationFragment = inflater.inflate(R.layout.rain_test, container, false)
+        viewRainAnimationFragment = inflater.inflate(R.layout.rain, container, false)
 
-        /*viewRainAnimationFragment.alpha = 0.3f*/
-
-        viewRainAnimationFragment.apply {
-
-            seekBar = rain_test_seek_bar
-
-        }
+        viewRainAnimationFragment.alpha = 0.25f
 
         val rainAnimation = RainAnimation(container!!.context)
+        rainAnimation.rotation = 25f
 
         viewRainAnimationFragment.apply {
 
             rain_test_const_layout.addView(rainAnimation)
 
         }
-
-        seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-
-                rainAnimation.rotation = (progress - 90).toFloat()
-
-            }
-
-        })
 
         return viewRainAnimationFragment
 
@@ -78,7 +55,7 @@ class RainAnimationFragment : Fragment() {
 
         init {
 
-            val countOfLines = 20
+            val countOfLines = 40
 
             val areaDistribution = (screenHeight / countOfLines)
 
@@ -102,11 +79,9 @@ class RainAnimationFragment : Fragment() {
 
                         Log.i("RainAF", "random = ${random}")
 
-
-                        val drop =
-                            Drop(context, random)
+                        val drop = Drop(context, random)
                         addView(drop)
-                        delay(Random.nextInt(500, 1000).toLong())
+                        delay(500)
 
                     }
 
@@ -124,8 +99,8 @@ class RainAnimationFragment : Fragment() {
         val paint = Paint()
         var path: Path = Path()
 
-        val lineSeparatorLength = /*Random.nextInt(4, 6)*/ 5 * 100.toFloat()
-        val lineLength = 30f
+        val lineSeparatorLength = Random.nextInt(7, 10) * 100f
+        val lineLength = 20f
 
         init {
 
@@ -142,16 +117,12 @@ class RainAnimationFragment : Fragment() {
 
             drawSeparatedLine()
 
-            //TODO(probably 1 think for bug)
-            val sumOfOneLine = (lineSeparatorLength + lineLength) / 2
-
-            //TODO(probably 2 think for bug)
             val animation =
-                TranslateAnimation(fromX, fromX, -sumOfOneLine, sumOfOneLine)
+                TranslateAnimation(fromX, fromX, -screenHeight.toFloat(), screenHeight + lineLength)
 
             animation.apply {
 
-                duration = 1000L
+                duration = 4000L
                 repeatMode = RESTART
                 repeatCount = INFINITE
                 interpolator = LinearInterpolator()
@@ -162,11 +133,11 @@ class RainAnimationFragment : Fragment() {
 
         }
 
-
         private fun drawSeparatedLine() {
 
             path.moveTo(0f, 0f)
             path.lineTo(0f, screenHeight.toFloat() + lineSeparatorLength + lineLength)
+            path.close()
 
             paint.pathEffect = DashPathEffect(floatArrayOf(lineLength, lineSeparatorLength), 0f)
 
