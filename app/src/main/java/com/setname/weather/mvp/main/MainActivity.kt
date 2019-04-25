@@ -5,10 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import com.setname.weather.R
-import com.setname.weather.mvp.views.welcome.WelcomeFragment
-import com.setname.weather.mvp.views.welcome.tests.GestureTest
 import com.setname.weather.mvp.views.welcome.tests.RainAnimationFragment
-import com.setname.weather.mvp.views.welcome.tests.SelectorTest
 import kotlinx.coroutines.*
 
 
@@ -20,10 +17,10 @@ class MainActivity : AppCompatActivity() {
 
         setFullScreen()
 
-        supportFragmentManager.beginTransaction().replace(
+        /*supportFragmentManager.beginTransaction().replace(
             R.id.main_container,
             WelcomeFragment()
-        ).commit()
+        ).commit()*/
 
         /*supportFragmentManager.beginTransaction().replace(
             R.id.main_container,
@@ -35,10 +32,10 @@ class MainActivity : AppCompatActivity() {
             SelectorTest()
         ).commit()*/
 
-        /*supportFragmentManager.beginTransaction().replace(
+        supportFragmentManager.beginTransaction().replace(
             R.id.background_container,
             RainAnimationFragment()
-        ).commit()*/
+        ).commit()
 
     }
 
@@ -69,9 +66,5 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-
-        super.onStart()
-    }
 }
 
