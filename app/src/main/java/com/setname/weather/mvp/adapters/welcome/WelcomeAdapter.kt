@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.setname.weather.R
 import com.setname.weather.mvp.adapters.welcome.day.DayAdapter
 import com.setname.weather.mvp.adapters.welcome.hour.ThreeHoursAdapter
@@ -19,8 +20,6 @@ import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_up_panel.view.*
-import java.util.logging.Logger
-import android.view.animation.AnimationUtils
 
 
 class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welcomePresenter: WelcomePresenter) :
@@ -30,6 +29,12 @@ class WelcomeAdapter(private val items: ArrayList<ListWelcome>, private val welc
     private lateinit var viewHolderUpPanel: ViewHolderWeatherUpPanel
 
     private lateinit var viewHolderWeatherPerThreeHours: ViewHolderWeatherPerThreeHours
+
+    override fun setBackground(id_background: Int) {
+
+        welcomePresenter.setBackground(id_background)
+
+    }
 
     override fun setThreeHoursPanel(id_city: Long, id_dt: Long) {
 

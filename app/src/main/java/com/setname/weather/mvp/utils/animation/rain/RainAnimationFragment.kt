@@ -14,7 +14,7 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.FrameLayout
 import com.setname.weather.R
-import kotlinx.android.synthetic.main.rain.view.*
+import kotlinx.android.synthetic.main.background_rain.view.*
 import kotlinx.coroutines.*
 import kotlin.random.Random
 
@@ -34,7 +34,7 @@ class RainAnimationFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        viewRainAnimationFragment = inflater.inflate(R.layout.rain, container, false)
+        viewRainAnimationFragment = inflater.inflate(R.layout.background_rain, container, false)
 
         viewRainAnimationFragment.alpha = 0.25f
 

@@ -3,7 +3,6 @@ package com.setname.weather.mvp.views.welcome
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,6 +13,9 @@ import com.setname.weather.mvp.adapters.welcome.WelcomeAdapter
 import com.setname.weather.mvp.interfaces.welcome.WelcomeView
 import com.setname.weather.mvp.interfaces.welcome.adapters.list_main.ListWelcome
 import com.setname.weather.mvp.presenters.welcome.WelcomePresenter
+import com.setname.weather.mvp.utils.adapters.WeatherBackground
+import com.setname.weather.mvp.utils.animation.ClearAnimationFragment
+import com.setname.weather.mvp.utils.animation.rain.RainAnimationFragment
 import kotlinx.android.synthetic.main.fragment_welcome.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,11 +25,11 @@ import java.util.logging.Logger
 
 class WelcomeFragment : Fragment(), WelcomeView {
 
-    private val ID_CITY:Long = 18918
+    private val ID_CITY: Long = 18918
 
     private val logger by lazy {
 
-        Logger.getLogger("Welcome")
+        Logger.getLogger("WelcomeFragment")
 
     }
 
@@ -67,13 +69,13 @@ class WelcomeFragment : Fragment(), WelcomeView {
 
             CoroutineScope(Dispatchers.Default).launch {
 
-                withContext(Dispatchers.IO){
+                withContext(Dispatchers.IO) {
 
                     welcomePresenter.setForecast(ID_CITY)
 
                 }
 
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
 
                     fragment_welcome_swipe_refresh.isRefreshing = false
 
@@ -91,9 +93,35 @@ class WelcomeFragment : Fragment(), WelcomeView {
         listWelcome.clear()
         listWelcome.addAll(listView)
 
-        CoroutineScope(Dispatchers.Main).launch{
+        CoroutineScope(Dispatchers.Main).launch {
 
             adapter.notifyDataSetChanged()
+
+        }
+
+    }
+
+    override fun setBackground(id_background: Int) {
+
+        when (id_background) {
+
+            WeatherBackground.Background.RAIN.type -> {
+
+                fragmentManager?.beginTransaction()?.replace(
+                    R.id.background_container,
+                    RainAnimationFragment()
+                )?.commit()
+
+            }
+
+            WeatherBackground.Background.CLEAR.type -> {
+
+                fragmentManager?.beginTransaction()?.replace(
+                    R.id.background_container,
+                    ClearAnimationFragment()
+                )?.commit()
+
+            }
 
         }
 

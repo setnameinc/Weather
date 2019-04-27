@@ -36,6 +36,12 @@ class WelcomePresenter(private var welcomeView: WelcomeView) : InteractionWithWe
         InteractionsWithDatabase(AppContext.applicationContext())
     }
 
+    fun setBackground(id_background: Int) {
+
+        welcomeView.setBackground(id_background)
+
+    }
+
     fun setForecast(id_city: Long) {
 
         CoroutineScope(Dispatchers.IO).launch {

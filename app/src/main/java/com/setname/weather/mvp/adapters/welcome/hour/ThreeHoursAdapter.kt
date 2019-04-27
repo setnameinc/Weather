@@ -3,7 +3,6 @@ package com.setname.weather.mvp.adapters.welcome.hour
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,13 @@ import com.setname.weather.R
 import com.setname.weather.mvp.models.adapter.welcome.hour.ModelThreeHours
 import com.setname.weather.mvp.utils.adapters.AdapterClickListener
 import com.setname.weather.mvp.utils.adapters.Selector
+import com.setname.weather.mvp.utils.adapters.WeatherBackground
 import com.setname.weather.mvp.utils.poor.AppContext
 import kotlinx.android.synthetic.main.adapter_weather_per_three_hours_model.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ThreeHoursAdapter(
     private val list: ArrayList<ModelThreeHours>,
@@ -45,9 +49,9 @@ class ThreeHoursAdapter(
 
         if (pos == currentPos) {
 
-            /*CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.Main).launch {
 
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
 
                     clickListener.setUpPanel(
                         id_city = list[pos].id_city,
@@ -56,26 +60,39 @@ class ThreeHoursAdapter(
 
                 }
 
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
+
+                    fun getBackground(str: String): Int {
+
+                        when (str.substring(0, 2).toInt()) {
+
+                            /**
+                             * all weather conditions from icon id
+                             * https://openweathermap.org/weather-conditions
+                             */
+
+                            1 -> return WeatherBackground.Background.CLEAR.type
+                            9, 10 -> return WeatherBackground.Background.RAIN.type
+
+                            else -> return -1
+
+                        }
+
+                    }
 
                     drawSelector(viewHolder)
 
+                    clickListener.setBackground(getBackground(list[pos].image_url))
+
                 }
 
-            }*/
-
-            clickListener.setUpPanel(
-                id_city = list[pos].id_city,
-                id_dt = list[pos].id_dt
-            )
-
-            drawSelector(viewHolder)
+            }
 
         }
 
     }
 
-    private var viewSelector: Selector = Selector(AppContext.applicationContext());
+    private var viewSelector: Selector = Selector(AppContext.applicationContext())
 
     private fun drawSelector(viewHolder: ViewHolder) {
 
