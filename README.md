@@ -6,3 +6,4 @@ Coroutines testing.
 
 Now not fully complited.
 
+It is raining animation when forecast is «rain».
